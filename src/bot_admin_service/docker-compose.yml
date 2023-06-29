@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+
+  bot_admin_service:
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "80"
+    restart: always

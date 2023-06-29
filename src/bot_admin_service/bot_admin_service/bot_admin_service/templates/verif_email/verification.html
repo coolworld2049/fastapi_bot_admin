@@ -1,0 +1,16 @@
+{% extends './verif_email/base.html' %} {% block content %}
+
+<p>Hi {{full_name}},</p>
+<p>
+  Thanks for creating an account with us. Please verify your email address by
+  clicking the button below.
+</p>
+<p>
+  Your verification token:
+</p>
+<p>
+  <b>{{token}}</b>
+</p>
+<p>Good luck! Hope it works.</p>
+
+{% endblock %}
