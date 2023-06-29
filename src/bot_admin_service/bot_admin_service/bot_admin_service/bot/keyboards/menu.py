@@ -8,12 +8,6 @@ def menu_keyboard_builder():
     builder = InlineKeyboardBuilder()
     builder.add(
         InlineKeyboardButton(
-            text="Main",
-            callback_data=MenuCallback(
-                name="main",
-            ).pack(),
-        ),
-        InlineKeyboardButton(
             text="📄 Help",
             callback_data=MenuCallback(
                 name="help",

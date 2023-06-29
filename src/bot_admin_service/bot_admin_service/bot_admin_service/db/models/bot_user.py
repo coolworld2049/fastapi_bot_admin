@@ -8,5 +8,5 @@ class BotUser(Base, TimestampsMixin):
     id = Column(BigInteger, primary_key=True, autoincrement=False)
     first_name = Column(String)
     last_name = Column(String)
-    username = Column(String)
+    username = Column(String, unique=True)
     language_code = Column(String)

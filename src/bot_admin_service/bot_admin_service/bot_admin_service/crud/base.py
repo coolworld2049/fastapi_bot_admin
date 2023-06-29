@@ -61,11 +61,16 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             if constr_filters is not None:
                 query = query.where(constr_filters)
                 query_count = query_count.where(constr_filters)
-            query = (
-                query.offset(request_params.skip)
-                .limit(request_params.limit)
-                .order_by(request_params.order_by)
-            )
+            if request_params.limit:
+                query = (
+                    query.offset(request_params.skip)
+                    .limit(request_params.limit)
+                    .order_by(request_params.order_by)
+                )
+            else:
+                query = query.offset(request_params.skip).order_by(
+                    request_params.order_by
+                )
         return query, query_count
 
     async def get_multi(
@@ -88,7 +93,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     async def create(self, db: AsyncSession, *, obj_in: CreateSchemaType) -> ModelType:
         db_obj = self.model(**obj_in.dict(exclude_none=True))
-        db.add(db_obj)
+        db.add(db_obj, _warn=False)
         await db.commit()
         await db.refresh(db_obj)
         return db_obj

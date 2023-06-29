@@ -33,7 +33,7 @@ async def read_users(
     current_user: models.User = Depends(auth.get_active_current_user),
     db: AsyncSession = Depends(get_session),
     request_params: RequestParams = Depends(
-        params.parse_react_admin_params(User),
+        params.parse_params(User),
     ),
 ) -> Any:
     """

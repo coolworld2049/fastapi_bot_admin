@@ -16,12 +16,8 @@ class BotSettings(BaseAppSettings):
     WEBHOOK_URL: Optional[str]
 
     @property
-    def webhook_path(self):
-        return f"/bot/{self.BOT_TOKEN}"
-
-    @property
     def webhook_url(self):
-        return f"{self.WEBHOOK_URL}{self.api_prefix}{self.webhook_path}"
+        return f"{self.WEBHOOK_URL}{self.api_prefix}/bot{self.BOT_TOKEN}"
 
 
 class RedisSettings(BaseAppSettings):
@@ -58,6 +54,7 @@ class AppSettings(BotSettings, RedisSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     FIRST_SUPERUSER_EMAIL: str
     FIRST_SUPERUSER_PASSWORD: str
+    FIRST_SUPERUSER_USERNAME: Optional[str]
 
     SMTP_HOST: Optional[str]
     SMTP_PORT: Optional[int]

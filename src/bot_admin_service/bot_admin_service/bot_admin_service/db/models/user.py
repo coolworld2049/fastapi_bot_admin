@@ -13,12 +13,14 @@ from bot_admin_service.db.base import Base, TimestampsMixin
 
 
 class User(Base, TimestampsMixin):
-    id = Column(BigInteger, primary_key=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
     email = Column(Text, nullable=False, unique=True)
     password = Column(Text)
     full_name = Column(String)
     username = Column(String, nullable=False, unique=True)
-    telegram_id = Column(BigInteger, ForeignKey("bot_user.id"), nullable=True)
+    telegram_id = Column(
+        BigInteger, ForeignKey("bot_user.id"), nullable=True, unique=True
+    )
     is_active = Column(Boolean, nullable=False, server_default=text("true"))
     is_superuser = Column(Boolean, nullable=False, server_default=text("false"))
     is_verified = Column(Boolean, nullable=False, server_default=text("false"))

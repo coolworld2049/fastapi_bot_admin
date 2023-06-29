@@ -15,7 +15,7 @@ from sqlalchemy.orm import DeclarativeMeta
 from bot_admin_service.schemas import RequestParams
 
 
-def parse_react_admin_params(
+def parse_params(
     model: DeclarativeMeta | Any,
 ) -> Callable[[str | None, str | None], RequestParams]:
     def inner(
@@ -41,7 +41,10 @@ def parse_react_admin_params(
             skip, limit = 0, 50
             if range_:
                 start, end = json.loads(range_)
-                skip, limit = start, (end - start + 1)
+                if end:
+                    skip, limit = start, (end - start + 1)
+                else:
+                    skip, limit = start, None
 
             order_by = desc(model.id)
             if sort_:

@@ -49,5 +49,6 @@ async def get_db() -> AsyncSession:
     except Exception as e:  # noqa
         logger.debug(f"{e.__class__} {e} - ROLLBACK")
         await s.rollback()
+        raise e
     finally:
         await s.close()

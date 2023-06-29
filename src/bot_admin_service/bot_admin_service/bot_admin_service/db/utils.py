@@ -21,8 +21,7 @@ async def create_first_superuser(db: AsyncSession):
             password_confirm=get_app_settings().FIRST_SUPERUSER_PASSWORD,
             is_superuser=True,
             is_verified=True,
-            full_name="Super user",
-            username="super_user_1000",
+            username=get_app_settings().FIRST_SUPERUSER_USERNAME,
         )
         super_user = await crud.user.create(db, obj_in=user_in_admin)
         logger.info("created")
