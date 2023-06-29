@@ -52,9 +52,7 @@ def parse_react_admin_params(
                     elif v.lower() == "desc":
                         direction = desc
                     else:
-                        raise HTTPException(
-                            400, f"Invalid sort direction {k}:{v}"
-                        )
+                        raise HTTPException(400, f"Invalid sort direction {k}:{v}")
                     order_by = direction(model.__table__.c[k])
             filter_by = None
             if filter_:
@@ -67,8 +65,7 @@ def parse_react_admin_params(
                         elif isinstance(v, str):
                             if str(k).split("_")[-1] == "date":
                                 fb.append(
-                                    model.__table__.c[k]
-                                    >= datetime.fromisoformat(v),
+                                    model.__table__.c[k] >= datetime.fromisoformat(v),
                                 )
                             else:
                                 fb.append(model.__table__.c[k].ilike(f"{v}%"))
@@ -85,9 +82,7 @@ def parse_react_admin_params(
                     if len(fb) > 0:
                         filter_by = and_(*fb)
         except JSONDecodeError:
-            raise HTTPException(
-                400, f"Invalid query params {range_, sort_, filter_}"
-            )
+            raise HTTPException(400, f"Invalid query params {range_, sort_, filter_}")
 
         return RequestParams(
             skip=skip,

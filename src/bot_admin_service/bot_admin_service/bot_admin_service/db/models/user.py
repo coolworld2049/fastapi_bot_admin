@@ -20,9 +20,7 @@ class User(Base, TimestampsMixin):
     full_name = Column(String(128))
     username = Column(String(128), nullable=False, unique=True)
     is_active = Column(Boolean, nullable=False, server_default=text("true"))
-    is_superuser = Column(
-        Boolean, nullable=False, server_default=text("false")
-    )
+    is_superuser = Column(Boolean, nullable=False, server_default=text("false"))
     verification_token = Column(String(255))
     is_verified = Column(Boolean, nullable=False, server_default=text("false"))
     verified_at = Column(TIMESTAMP(timezone=True), default=None)

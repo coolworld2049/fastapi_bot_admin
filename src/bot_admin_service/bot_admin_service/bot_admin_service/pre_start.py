@@ -27,9 +27,7 @@ async def init() -> None:
             await conn.execute(text("select 1"))
         logger.info(engine.url)
     except ConnectionRefusedError as ex:
-        logger.error(
-            f"{engine.url}, {ex.__class__.__name__} {ex}"
-        )
+        logger.error(f"{engine.url}, {ex.__class__.__name__} {ex}")
 
 
 def main() -> None:

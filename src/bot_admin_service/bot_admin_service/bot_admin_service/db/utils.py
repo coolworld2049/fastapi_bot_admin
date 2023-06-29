@@ -46,4 +46,6 @@ async def drop_database() -> None:
             "AND pid <> pg_backend_pid();"
         )
         await conn.execute(text(disc_users))
-        await conn.execute(text(f'DROP DATABASE "{get_app_settings().POSTGRESQL_DATABASE}"'))
+        await conn.execute(
+            text(f'DROP DATABASE "{get_app_settings().POSTGRESQL_DATABASE}"')
+        )

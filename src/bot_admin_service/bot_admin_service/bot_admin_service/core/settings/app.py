@@ -49,8 +49,6 @@ class AppSettings(BotSettings, RedisSettings):
     openapi_url: str = f"{api_prefix}/openapi.json"
     redoc_url: str = f"{api_prefix}/redoc"
 
-    USE_RBAC: Optional[bool] = True
-    USE_USER_CHECKS: Optional[bool] = True
     USE_EMAILS: Optional[bool] = True if os.getenv("SMTP_PASSWORD") else False
 
     APP_NAME: Optional[str] = "bot_admin_service"

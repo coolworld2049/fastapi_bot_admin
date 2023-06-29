@@ -27,13 +27,9 @@ async def create_users(db: AsyncSession, count=100, out_user_creds=None):
     test_users: dict[int, dict] = {}
     for i in range(count):
         password = gen_random_password()
-        random_phone = "+7" + "".join(
-            random.choice(string.digits) for _ in range(10)
-        )
+        random_phone = "+7" + "".join(random.choice(string.digits) for _ in range(10))
         user_in = schemas.UserCreate(
-            email=EmailStr(
-                f"{i}{random_lower_string(8)}@gmail.com"
-            ),
+            email=EmailStr(f"{i}{random_lower_string(8)}@gmail.com"),
             password=password,
             password_confirm=password,
             username=f"{i}{random.randint(1000, 10000)}",
@@ -63,9 +59,7 @@ async def test_fake_data(db: AsyncSession):
     if get_app_settings().STAGE != StageType.prod:
         count = 20
         out_user_creds = "test_users_creds.json"
-        users = await create_users(
-            db=db, count=count, out_user_creds=out_user_creds
-        )
+        users = await create_users(db=db, count=count, out_user_creds=out_user_creds)
         logger.info(
             f"users_count - {len(users)}, "
             f"fake user credentials stored in {pathlib.Path().absolute()}/{out_user_creds}"

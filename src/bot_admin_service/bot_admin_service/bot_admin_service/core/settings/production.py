@@ -1,5 +1,7 @@
+import logging
+
 from bot_admin_service.core.settings.app import AppSettings
 
 
 class ProdAppSettings(AppSettings):
-    pass
+    LOGGING_LEVEL = logging.INFO

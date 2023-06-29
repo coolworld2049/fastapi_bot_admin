@@ -15,20 +15,17 @@ engine = create_async_engine(get_app_settings().postgres_asyncpg_url)
 session = async_sessionmaker(engine, autocommit=False)
 
 if get_app_settings().SQLALCHEMY_PROFILE_QUERY_MODE:
+
     def before_cursor_execute(
         conn, cursor, statement, parameters, context, executemany
     ):
         conn.info.setdefault("query_start_time", []).append(time.time())
         logger.debug(f"Start Query: {statement}")
 
-
-    def after_cursor_execute(
-        conn, cursor, statement, parameters, context, executemany
-    ):
+    def after_cursor_execute(conn, cursor, statement, parameters, context, executemany):
         total = time.time() - conn.info["query_start_time"].pop(-1)
         logger.debug("Query Complete!")
         logger.debug("Total Time: %f" % total)
-
 
     event.listen(
         engine.sync_engine,

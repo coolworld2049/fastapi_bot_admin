@@ -18,9 +18,7 @@ from bot_admin_service.db.utils import create_database
 
 configure_logging()
 
-logger.warning(
-    f"USE_RBAC={get_app_settings().USE_RBAC},"
-    f" USE_USER_CHECKS={get_app_settings().USE_USER_CHECKS},"
+logger.info(
     f" USE_EMAILS={get_app_settings().USE_EMAILS}"
     f" PROFILE_QUERY_MODE={get_app_settings().SQLALCHEMY_PROFILE_QUERY_MODE}"
 )
@@ -35,10 +33,7 @@ def get_application() -> FastAPI:
         allow_methods=["*"],
         expose_headers=["*"],
     )
-    application.include_router(
-        api_router, prefix=get_app_settings().api_prefix
-    )
-    # application.middleware("http")(LoguruLoggingMiddleware())
+    application.include_router(api_router, prefix=get_app_settings().api_prefix)
     application.add_middleware(
         CorrelationIdMiddleware,
         header_name="X-Request-ID",

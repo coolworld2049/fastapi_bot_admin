@@ -64,9 +64,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             await super().remove(db, id=db_obj.id)
             logger.error(e)
             return False
-        await super().update(
-            db, db_obj=db_obj, obj_in=UserUpdate(**db_obj.__dict__)
-        )
+        await super().update(db, db_obj=db_obj, obj_in=UserUpdate(**db_obj.__dict__))
         return True
 
     async def verify_token_from_email(

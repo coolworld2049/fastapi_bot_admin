@@ -26,9 +26,7 @@ async def signup_client(
     user = await crud.user.get_by_email(db, email=user_in.email)
     if user:
         raise DuplicateUserException
-    obj_in = schemas.UserCreate(
-        **user_in.dict(exclude_unset=True)
-    )
+    obj_in = schemas.UserCreate(**user_in.dict(exclude_unset=True))
     user = await crud.user.create(db, obj_in=obj_in)
     if get_app_settings().USE_EMAILS:
         email = Email(EmailStr(get_app_settings().SMTP_FROM))
