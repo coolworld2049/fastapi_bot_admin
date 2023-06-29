@@ -6,9 +6,7 @@ from pydantic import EmailStr, BaseModel
 
 class UserOptional(BaseModel):
     full_name: Optional[str]
-
-    class Config:
-        use_enum_values = True
+    telegram_id: Optional[int]
 
 
 class UserSpec(BaseModel):

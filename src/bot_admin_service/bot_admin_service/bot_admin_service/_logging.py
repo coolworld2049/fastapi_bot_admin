@@ -51,6 +51,14 @@ def record_formatter(record: dict[str, Any]) -> str:  # pragma: no cover
     :param record: record information.
     :return: format string.
     """
+    if get_app_settings().BOT_TOKEN in record.get("message"):
+        record.update(
+            {
+                "message": str(record.get("message")).replace(
+                    get_app_settings().BOT_TOKEN, ""
+                )
+            }
+        )
     log_format = (
         "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green> "
         "| <level>{level: <8}</level> "
@@ -71,7 +79,7 @@ def configure_logging() -> None:  # pragma: no cover
     logging.basicConfig(handlers=[intercept_handler], level=logging.NOTSET)
 
     for logger_name in logging.root.manager.loggerDict:
-        if logger_name.startswith("uvicorn."):
+        if logger_name.startswith("uvicorn.") or logger_name.startswith("aiogram."):
             logging.getLogger(logger_name).handlers = []
 
     # change handler for default uvicorn logger
