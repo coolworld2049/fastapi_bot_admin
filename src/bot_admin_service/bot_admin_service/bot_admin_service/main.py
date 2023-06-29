@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-from aiogram.types import Update
 from asgi_correlation_id import CorrelationIdMiddleware
 from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import FastAPI
@@ -10,7 +9,6 @@ from starlette.middleware.cors import CORSMiddleware
 from bot_admin_service._logging import configure_logging
 from bot_admin_service.api.api_v1.api import api_router
 from bot_admin_service.bot.dispatcher import dp
-from bot_admin_service.bot.loader import main_bot
 from bot_admin_service.bot.main import startup_bot, shutdown_bot
 from bot_admin_service.core.config import get_app_settings
 from bot_admin_service.db.session import engine, get_db
@@ -59,9 +57,3 @@ async def startup():
 async def shutdown():
     await engine.dispose()
     await shutdown_bot(dp)
-
-
-@app.post(get_app_settings().webhook_path)
-async def bot_webhook(update: dict):
-    telegram_update = Update(**update)
-    await dp.feed_update(bot=main_bot, update=telegram_update)

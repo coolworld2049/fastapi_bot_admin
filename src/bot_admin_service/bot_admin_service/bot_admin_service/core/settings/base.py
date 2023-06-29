@@ -15,6 +15,12 @@ class StageType(str, Enum):
 
 
 class BaseAppSettings(BaseSettings):
+    api_prefix: str = "/api/v1"
+    docs_url: str = f"{api_prefix}/docs"
+    openapi_prefix: str = ""
+    openapi_url: str = f"{api_prefix}/openapi.json"
+    redoc_url: str = f"{api_prefix}/redoc"
+
     project_path = pathlib.Path(__file__).parent.parent.parent.parent.parent
     load_dotenv(find_dotenv(f"{project_path}/.env"))
     stage_dotenv = find_dotenv(f'{project_path}/.env.{os.getenv("STAGE", "dev")}')

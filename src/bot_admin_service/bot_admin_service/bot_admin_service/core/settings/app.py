@@ -21,7 +21,7 @@ class BotSettings(BaseAppSettings):
 
     @property
     def webhook_url(self):
-        return f"{self.WEBHOOK_URL}{self.webhook_path}"
+        return f"{self.WEBHOOK_URL}{self.api_prefix}{self.webhook_path}"
 
 
 class RedisSettings(BaseAppSettings):
@@ -43,12 +43,6 @@ class RedisSettings(BaseAppSettings):
 
 
 class AppSettings(BotSettings, RedisSettings):
-    api_prefix: str = "/api/v1"
-    docs_url: str = f"{api_prefix}/docs"
-    openapi_prefix: str = ""
-    openapi_url: str = f"{api_prefix}/openapi.json"
-    redoc_url: str = f"{api_prefix}/redoc"
-
     USE_EMAILS: Optional[bool] = True if os.getenv("SMTP_PASSWORD") else False
 
     APP_NAME: Optional[str] = "bot_admin_service"
