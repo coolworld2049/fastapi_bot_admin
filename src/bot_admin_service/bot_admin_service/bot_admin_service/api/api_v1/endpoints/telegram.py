@@ -1,11 +1,10 @@
 import asyncio
-from typing import Optional, Literal
+from typing import Optional, Literal, Annotated
 
 from aiogram import Bot
-from aiogram.methods import SendMessage
-from aiogram.types import Update
-from fastapi import APIRouter, Body, Depends
-from fastapi.params import Param
+from aiogram.types import Update, BufferedInputFile, InputMediaPhoto, InputMediaVideo
+from fastapi import APIRouter, Body, Depends, UploadFile
+from fastapi.params import Param, File
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
@@ -34,42 +33,68 @@ async def bot_webhook(update: dict):
     f"{get_app_settings().BOT_TOKEN}/post",
 )
 async def publish_post(
+    files: Annotated[list[UploadFile], File(...)] = None,
     text: Optional[str] = Body(..., media_type="text/base"),
     parse_mode: Literal["HTML", "MarkdownV2"] = "HTML",
     disable_web_page_preview: Optional[bool] = None,
     disable_notification: Optional[bool] = None,
     protect_content: Optional[bool] = None,
-    delay: Optional[int] = Param(
-        1, description="delay in seconds between send messages"
+    delay: Optional[float] = Param(
+        0.1, description="delay in seconds between send messages"
     ),
     db: AsyncSession = Depends(get_session),
     bot: Bot = Depends(get_main_bot),
     current_user: models.User = Depends(auth.get_active_current_user),
 ):
-    request_params = RequestParams(limit=None)
-    users = await crud.bot_user.get_multi(db, request_params)
-    send_messages = []
+    input_media: list[InputMediaPhoto | InputMediaVideo] = []
+    for i, file in enumerate(files):
+        media = BufferedInputFile(await file.read(), file.filename)
+        if file.content_type.startswith("image"):
+            input_media_photo = InputMediaPhoto(
+                media=media,
+                caption=text if i == 0 else None,
+                parse_mode=parse_mode,
+            )
+            input_media.append(input_media_photo)
+        elif file.content_type.startswith("video"):
+            input_media_video = InputMediaVideo(
+                media=media,
+                caption=text if i == 0 else None,
+                parse_mode=parse_mode,
+            )
+            input_media.append(input_media_video)
+    users = await crud.bot_user.get_multi(
+        db,
+        RequestParams(limit=None),
+    )
+    send_messages_count = 0
     for u in users:
         await asyncio.sleep(delay)
         try:
-            message = await bot.send_message(
-                **SendMessage(
+            if len(input_media) > 0:
+                await bot.send_media_group(
+                    chat_id=u.id,
+                    media=input_media,
+                    disable_notification=disable_notification,
+                    protect_content=protect_content,
+                )
+            else:
+                await bot.send_message(
                     chat_id=u.id,
                     text=text,
                     parse_mode=parse_mode,
                     disable_web_page_preview=disable_web_page_preview,
                     disable_notification=disable_notification,
                     protect_content=protect_content,
-                ).dict()
-            )
-            send_messages.append(message.message_id)
+                )
+            send_messages_count += 1
         except Exception as e:
             logger.error(e)
             response = JSONResponse(content=str(e.args), status_code=status.HTTP_200_OK)
     return JSONResponse(
         content={
             "users_count": len(users),
-            "send_messages_count": len(send_messages),
+            "send_messages_count": send_messages_count,
         },
         status_code=status.HTTP_200_OK,
     )
