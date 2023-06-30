@@ -6,6 +6,9 @@ services:
     extends:
       file: ../src/bot_admin_service/docker-compose.yml
       service: bot_admin_service
+    environment:
+      - STAGE=dev
+      - MAX_WORKERS=1
     env_file:
       - ../.env
 

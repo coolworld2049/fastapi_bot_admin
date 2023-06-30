@@ -38,7 +38,7 @@ class RedisSettings(BaseAppSettings):
     REDIS_OM_URL: Optional[str]
 
 
-class AppSettings(BotSettings, RedisSettings):
+class AppSettings(BotSettings):
     USE_EMAILS: Optional[bool] = True if os.getenv("SMTP_PASSWORD") else False
 
     APP_NAME: Optional[str] = "bot_admin_service"
