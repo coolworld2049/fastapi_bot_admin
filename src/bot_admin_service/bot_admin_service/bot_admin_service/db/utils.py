@@ -19,7 +19,7 @@ async def create_first_superuser(db: AsyncSession):
             email=EmailStr(get_app_settings().FIRST_SUPERUSER_EMAIL),
             password=get_app_settings().FIRST_SUPERUSER_PASSWORD,
             password_confirm=get_app_settings().FIRST_SUPERUSER_PASSWORD,
-            full_name="Admin Admin,",
+            full_name="Admin Admin",
             is_superuser=True,
             is_verified=True,
             username=get_app_settings().FIRST_SUPERUSER_USERNAME,
