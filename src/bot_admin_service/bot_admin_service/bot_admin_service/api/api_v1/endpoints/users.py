@@ -7,7 +7,6 @@ from fastapi import HTTPException
 from fastapi import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
-from starlette.requests import Request
 
 from bot_admin_service import crud
 from bot_admin_service import schemas
@@ -28,18 +27,20 @@ router = APIRouter()
     response_model=List[schemas.User],
 )
 async def read_users(
-    request: Request,
     response: Response,
     current_user: models.User = Depends(auth.get_active_current_user),
-    db: AsyncSession = Depends(get_session),
     request_params: RequestParams = Depends(
         params.parse_params(User),
     ),
+    db: AsyncSession = Depends(get_session),
 ) -> Any:
     """
     Retrieve users.
     """
-    users = await crud.user.get_multi(db, request_params)
+    users, total = await crud.user.get_multi(db, request_params)
+    response.headers[
+        "Content-Range"
+    ] = f"{request_params.skip}-{request_params.skip + len(users)}/{total}"
     return users
 
 

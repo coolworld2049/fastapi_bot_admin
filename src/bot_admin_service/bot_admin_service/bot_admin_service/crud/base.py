@@ -89,7 +89,7 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         total: Result = await db.execute(query_count)
         result: Result = await db.execute(query)
         r = result.scalars().all()
-        return r
+        return r, total.fetchone().count
 
     async def create(self, db: AsyncSession, *, obj_in: CreateSchemaType) -> ModelType:
         db_obj = self.model(**obj_in.dict(exclude_none=True))

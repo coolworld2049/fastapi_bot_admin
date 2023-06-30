@@ -35,12 +35,12 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         password: str,
         db: AsyncSession,
     ) -> Optional[User]:
-        db_obj = await self.get_by_email(db, email=email)
-        if not user:
+        user_obj = await self.get_by_email(db, email=email)
+        if not user_obj:
             return None
-        if not verify_password(password, db_obj.password):
+        if not verify_password(password, user_obj.password):
             return None
-        return db_obj
+        return user_obj
 
     async def send_email_for_verif(
         self,

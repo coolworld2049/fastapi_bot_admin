@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional, Literal, Annotated
+from typing import Optional, Literal, Annotated, List, Any
 
 from aiogram import Bot
 from aiogram.types import Update, BufferedInputFile, InputMediaPhoto, InputMediaVideo
@@ -8,15 +8,16 @@ from fastapi.params import Param, File
 from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
-from starlette.responses import JSONResponse
+from starlette.exceptions import HTTPException
+from starlette.responses import JSONResponse, Response
 
-from bot_admin_service import crud
-from bot_admin_service.api.deps import auth
+from bot_admin_service import crud, schemas
+from bot_admin_service.api.deps import auth, params
 from bot_admin_service.api.deps.bot import get_main_bot
 from bot_admin_service.bot.dispatcher import dp
 from bot_admin_service.bot.loader import main_bot
 from bot_admin_service.core.config import get_app_settings
-from bot_admin_service.db import models
+from bot_admin_service.db import models, BotUser
 from bot_admin_service.db.dependency import get_session
 from bot_admin_service.schemas import RequestParams
 
@@ -27,6 +28,46 @@ router = APIRouter(prefix=f"/bot")
 async def bot_webhook(update: dict):
     telegram_update = Update(**update)
     await dp.feed_update(bot=main_bot, update=telegram_update)
+
+
+@router.get(
+    "/users",
+    response_model=List[schemas.BotUser],
+)
+async def read_bot_users(
+    response: Response,
+    current_user: models.User = Depends(auth.get_active_current_user),
+    request_params: RequestParams = Depends(
+        params.parse_params(BotUser),
+    ),
+    db: AsyncSession = Depends(get_session),
+) -> Any:
+    """
+    Retrieve bot users.
+    """
+    users, total = await crud.bot_user.get_multi(db, request_params)
+    response.headers[
+        "Content-Range"
+    ] = f"{request_params.skip}-{request_params.skip + len(users)}/{total}"
+    return users
+
+
+@router.get(
+    "/users/{id}",
+    response_model=schemas.User,
+)
+async def read_user_by_id(
+    id: int,
+    db: AsyncSession = Depends(get_session),
+    current_user: models.User = Depends(auth.get_active_current_user),
+) -> Any:
+    """
+    Get a specific bot user.
+    """
+    user = await crud.bot_user.get(db, id)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    return user
 
 
 @router.post(

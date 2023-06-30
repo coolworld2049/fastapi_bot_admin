@@ -13,11 +13,11 @@ from bot_admin_service.core.settings.base import BaseAppSettings, StageType
 class BotSettings(BaseAppSettings):
     BOT_OWNER_ID: int
     BOT_TOKEN: str
-    WEBHOOK_URL: Optional[str]
+    WEBHOOK_DOMAIN: Optional[str]
 
     @property
     def webhook_url(self):
-        return f"{self.WEBHOOK_URL}{self.api_prefix}/bot{self.BOT_TOKEN}"
+        return f"https://{self.WEBHOOK_DOMAIN}{self.api_prefix}/bot{self.BOT_TOKEN}"
 
 
 class RedisSettings(BaseAppSettings):
@@ -38,7 +38,7 @@ class RedisSettings(BaseAppSettings):
     REDIS_OM_URL: Optional[str]
 
 
-class AppSettings(BotSettings, RedisSettings):
+class AppSettings(BotSettings):
     USE_EMAILS: Optional[bool] = True if os.getenv("SMTP_PASSWORD") else False
 
     APP_NAME: Optional[str] = "bot_admin_service"

@@ -2,25 +2,15 @@ version: '3.9'
 
 services:
 
-  redis:
-    image: redis/redis-stack-server:latest
-    ports:
-      - "6379:6379"
-      - "8001:8001"
+  bot_admin_service:
+    extends:
+      file: ../src/bot_admin_service/docker-compose.yml
+      service: bot_admin_service
     environment:
-      - REDIS_ARGS=--save 3600 1 300 100 60 10000
-    volumes:
-      - redis-data:/data
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    healthcheck:
-      test: redis-cli ping
-      interval: 1s
-      timeout: 3s
-      retries: 50
-
+      - STAGE=prod
+      - MAX_WORKERS=1
+    env_file:
+      - ../.env
 
   postgresql:
     image: bitnami/postgresql:latest
