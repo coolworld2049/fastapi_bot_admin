@@ -19,17 +19,17 @@ def parse_params(
     model: DeclarativeMeta | Any,
 ) -> Callable[[str | None, str | None], RequestParams]:
     def inner(
-        range_: Optional[str] = Query(
-            None,
-            alias="range",
-            description="Format: `[start, end]`",
-            example="[0, 10]",
-        ),
         sort_: Optional[str] = Query(
             None,
             alias="sort",
             description='Format: `{"field_name": "direction"}`',
             example='{"id": "ASC"}',
+        ),
+        range_: Optional[str] = Query(
+            None,
+            alias="range",
+            description="Format: `[start, end]`",
+            example="[0, 10]",
         ),
         filter_: Optional[str] = Query(
             None,
@@ -48,15 +48,14 @@ def parse_params(
 
             order_by = desc(model.id)
             if sort_:
-                sort_data = json.loads(sort_)
-                for k, v in sort_data.items():
-                    if v.lower() == "asc":
-                        direction = asc
-                    elif v.lower() == "desc":
-                        direction = desc
-                    else:
-                        raise HTTPException(400, f"Invalid sort direction {k}:{v}")
-                    order_by = direction(model.__table__.c[k])
+                sort_data: list[str] = json.loads(sort_)
+                if sort_data[1].lower() == "asc":
+                    direction = asc
+                elif sort_data[1].lower() == "desc":
+                    direction = desc
+                else:
+                    raise HTTPException(400, f"Invalid sort direction {sort_data[0]}:{sort_data[1]}")
+                order_by = direction(model.__table__.c[sort_data[0]])
             filter_by = None
             if filter_:
                 ft: dict = json.loads(filter_)
