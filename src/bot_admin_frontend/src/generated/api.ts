@@ -26,6 +26,55 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface BotUser
+ */
+export interface BotUser {
+    /**
+     * 
+     * @type {number}
+     * @memberof BotUser
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'first_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'last_name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'language_code'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BotUser
+     */
+    'updated_at'?: string;
+}
+/**
+ * 
+ * @export
  * @interface HTTPValidationError
  */
 export interface HTTPValidationError {
@@ -850,6 +899,93 @@ export const TelegramApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Retrieve bot users.
+         * @summary Read Bot Users
+         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readBotUsersApiV1BotUsersGet: async (sort?: string, range?: string, filter?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/bot/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a specific bot user.
+         * @summary Read User By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readUserByIdApiV1BotUsersIdGet: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('readUserByIdApiV1BotUsersIdGet', 'id', id)
+            const localVarPath = `/api/v1/bot/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -888,6 +1024,30 @@ export const TelegramApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Retrieve bot users.
+         * @summary Read Bot Users
+         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BotUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readBotUsersApiV1BotUsersGet(sort, range, filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get a specific bot user.
+         * @summary Read User By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readUserByIdApiV1BotUsersIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readUserByIdApiV1BotUsersIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -923,6 +1083,28 @@ export const TelegramApiFactory = function (configuration?: Configuration, baseP
          */
         publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options?: any): AxiosPromise<any> {
             return localVarFp.publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve bot users.
+         * @summary Read Bot Users
+         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: any): AxiosPromise<Array<BotUser>> {
+            return localVarFp.readBotUsersApiV1BotUsersGet(sort, range, filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a specific bot user.
+         * @summary Read User By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readUserByIdApiV1BotUsersIdGet(id: number, options?: any): AxiosPromise<User> {
+            return localVarFp.readUserByIdApiV1BotUsersIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -962,6 +1144,32 @@ export class TelegramApi extends BaseAPI {
      */
     public publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options?: AxiosRequestConfig) {
         return TelegramApiFp(this.configuration).publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve bot users.
+     * @summary Read Bot Users
+     * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+     * @param {string} [range] Format: &#x60;[start, end]&#x60;
+     * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TelegramApi
+     */
+    public readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig) {
+        return TelegramApiFp(this.configuration).readBotUsersApiV1BotUsersGet(sort, range, filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a specific bot user.
+     * @summary Read User By Id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TelegramApi
+     */
+    public readUserByIdApiV1BotUsersIdGet(id: number, options?: AxiosRequestConfig) {
+        return TelegramApiFp(this.configuration).readUserByIdApiV1BotUsersIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

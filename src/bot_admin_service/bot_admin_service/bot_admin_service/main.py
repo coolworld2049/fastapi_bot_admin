@@ -29,7 +29,7 @@ def get_application() -> FastAPI:
         allow_origins=get_app_settings().APP_BACKEND_CORS_ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
-        expose_headers=["Content-Range", "Range"],
+        expose_headers=["*", "Content-Range", "Range"],
         allow_headers=["*", "Authorization", "Content-Type", "Content-Range", "Range"],
     )
     application.include_router(api_router, prefix=get_app_settings().api_prefix)
