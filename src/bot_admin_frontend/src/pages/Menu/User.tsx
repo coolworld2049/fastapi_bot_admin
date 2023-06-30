@@ -1,12 +1,9 @@
 import {
   BooleanField,
-  BooleanInput,
-  ChipField,
   Create,
   Datagrid,
   DateField,
-  Edit,
-  FilterLiveSearch,
+  Edit, FilterLiveSearch,
   List,
   PasswordInput,
   required,
@@ -60,14 +57,8 @@ export const UserEdit = (props: any) => (
   <Edit {...props} redirect="list">
     <SimpleForm>
       <TextInput source="id" disabled/>
-      <TextInput source="email"/>
-      <ChipField source="username"/>
-      <TextField source="telegram_id"/>
-      <BooleanInput
-        {...props}
-        source="is_active"
-        defaultValue={true}
-      />
+      <TextInput source="username"/>
+      <TextInput source="telegram_id" label={"Telegram id"}/>
     </SimpleForm>
   </Edit>
 );
@@ -78,6 +69,7 @@ export const UserCreate = (props: any) => {
       <SimpleForm mode="onBlur" reValidateMode="onBlur">
         <TextInput source="email" validate={required()}/>
         <PasswordInput source="password" validate={required()}/>
+        <TextInput source="username"/>
       </SimpleForm>
     </Create>
   );
