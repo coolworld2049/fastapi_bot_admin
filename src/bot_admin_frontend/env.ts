@@ -4,7 +4,7 @@ const readAccessToken = async (): Promise<string> => {
   return localStorage.getItem("token") || "";
 };
 
-export const basePath: string | undefined = "http://localhost:8000";
+export const basePath: string | undefined = import.meta.env.VITE_REST_URL;
 
 const apiConfig: Configuration = new Configuration({
   accessToken: readAccessToken,

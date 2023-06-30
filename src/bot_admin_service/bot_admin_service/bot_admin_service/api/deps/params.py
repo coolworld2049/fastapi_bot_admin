@@ -22,8 +22,8 @@ def parse_params(
         sort_: Optional[str] = Query(
             None,
             alias="sort",
-            description='Format: `{"field_name": "direction"}`',
-            example='{"id": "ASC"}',
+            description='Format: `["field_name", "direction"]`',
+            example='["id", "ASC"]',
         ),
         range_: Optional[str] = Query(
             None,
@@ -48,14 +48,14 @@ def parse_params(
 
             order_by = desc(model.id)
             if sort_:
-                sort_data: list[str] = json.loads(sort_)
-                if sort_data[1].lower() == "asc":
+                sort_column, sort_order = json.loads(sort_)
+                if sort_order.lower() == "asc":
                     direction = asc
-                elif sort_data[1].lower() == "desc":
+                elif sort_order.lower() == "desc":
                     direction = desc
                 else:
-                    raise HTTPException(400, f"Invalid sort direction {sort_data[0]}:{sort_data[1]}")
-                order_by = direction(model.__table__.c[sort_data[0]])
+                    raise HTTPException(400, f"Invalid sort direction {sort_order}")
+                order_by = direction(model.__table__.c[sort_column])
             filter_by = None
             if filter_:
                 ft: dict = json.loads(filter_)

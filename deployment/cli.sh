@@ -4,6 +4,10 @@ source ../src/bot_admin_service/.env
 project_name=${PROJECT_NAME?env PROJECT_NAME required}
 compose_file=docker-compose.yml
 
+letsencrypt() {
+
+}
+
 install() {
   docker pull coolworldocker/"$project_name"
   docker-compose -p "$project_name" -f "$compose_file" up -d
