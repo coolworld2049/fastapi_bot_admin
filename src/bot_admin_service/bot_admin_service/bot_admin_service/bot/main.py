@@ -10,13 +10,14 @@ from bot_admin_service.core.config import get_app_settings
 
 
 async def startup_bot(dp: Dispatcher) -> None:
+    if get_app_settings().webhook_url != await main_bot.get_webhook_info():
+        await main_bot.delete_webhook(drop_pending_updates=True)
+        await main_bot.set_webhook(url=get_app_settings().webhook_url)
+    logger.debug(await main_bot.get_webhook_info())
     await main_bot.delete_my_commands()
     await main_bot.set_my_commands(
         commands=[BotCommand(command="start", description="start")]
     )
-    await main_bot.delete_webhook(drop_pending_updates=True)
-    await main_bot.set_webhook(url=get_app_settings().webhook_url)
-    logger.debug(await main_bot.get_webhook_info())
     dp.include_routers(
         menu.router,
     )
