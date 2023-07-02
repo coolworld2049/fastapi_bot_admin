@@ -49,7 +49,6 @@ export const PostList = (props: any) => {
         expand={<PostPanel {...props}/>}
         expandSingle={true}
       >
-
         <RichTextField source="text"/>
         <BooleanField source="is_published" label={"Published"}/>
         <DateField source="created_at" showTime={true}/>
@@ -79,18 +78,17 @@ const PostPublishButton = (props: any) => {
     {...props}
     label={"Publish"}
     mutationOptions={{onSuccess: handleSuccess, onError: handleError}}
-    type="button"
-    variant="text"
+    variant="outlined"
     alwaysEnable={!(record.is_published)}
   />;
 };
 
 const PostPublishToolbar = (props: any) => {
   return (
-    <Toolbar>
-      <SaveButton {...props}/>
-      <PostPublishButton {...props}/>
-      <DeleteButton/>
+    <Toolbar {...props}>
+      <SaveButton/>
+      <PostPublishButton variant="outlined"/>
+      <DeleteButton variant={"text"}/>
     </Toolbar>
   )
 };
