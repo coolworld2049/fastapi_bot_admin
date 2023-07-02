@@ -23,7 +23,7 @@ import {
   useRecordContext,
   useRefresh
 } from "react-admin";
-import {RichTextInput} from "ra-input-rich-text";
+import {ClearButtons, FormatButtons, RichTextInput, RichTextInputToolbar} from "ra-input-rich-text";
 import dataProvider from "../dataProvider";
 import React from "react";
 
@@ -76,49 +76,68 @@ const PostPublishButton = (props: any) => {
   const handleError = (error: any) => {
     notify(`Post ${record.id} not published!${error}`, {type: 'error'})
   };
-  return <SaveButton
+  return (<SaveButton
     {...props}
     label={"Publish"}
     mutationOptions={{onSuccess: handleSuccess, onError: handleError}}
     type={"button"}
     variant="outlined"
     alwaysEnable={!(record.is_published)}
-  />;
+  />);
 };
 
 const PostPublishToolbar = (props: any) => {
   return (
     <Toolbar {...props}>
-      <SaveButton/>
+      <SaveButton alwaysEnable={true}/>
       <PostPublishButton variant="outlined" sx={{marginLeft: "10px"}}/>
       <DeleteButton variant={"text"} sx={{marginLeft: "10px"}}/>
     </Toolbar>
   )
 };
 
+const TgRichTextInputToolbar = () => {
+  return (
+    <RichTextInputToolbar>
+      <FormatButtons/>
+      <ClearButtons/>
+    </RichTextInputToolbar>
+  )
+}
+export const PostEdit = (props: any) => {
+  return (
+    <Edit {...props} redirect="edit">
+      <SimpleForm toolbar={<PostPublishToolbar/>}>
+        <TextInput source="id" disabled/>
+        <BooleanInput source="is_published"/>
+        <RichTextInput
+          source="text"
+          toolbar={<TgRichTextInputToolbar/>}
+          fullWidth
+        />
+        <FileInput source="files" multiple>
+          <FileField source="src" title="title" download target={"_blank"}/>
+        </FileInput>
+      </SimpleForm>
+    </Edit>
+  )
+};
 
-export const PostEdit = (props: any) => (
-  <Edit {...props} redirect="edit">
-    <SimpleForm toolbar={<PostPublishToolbar/>}>
-      <TextInput source="id" disabled/>
-      <BooleanInput source="is_published"/>
-      <RichTextInput source="text"/>
-      <FileInput source="files" multiple>
-        <FileField source="src" title="title" download target={"_blank"}/>
-      </FileInput>
-    </SimpleForm>
-  </Edit>
-);
 
-
-export const PostCreate = () => (
-  <Create redirect={"edit"}>
-    <SimpleForm>
-      <TextInput source="id" disabled/>
-      <RichTextInput source="text"/>
-      <FileInput source="files" multiple>
-        <FileField source="src" title="title" download target={"_blank"}/>
-      </FileInput>
-    </SimpleForm>
-  </Create>
-);
+export const PostCreate = () => {
+  return (
+    <Create redirect={"edit"}>
+      <SimpleForm>
+        <TextInput source="id" disabled/>
+        <RichTextInput
+          source="text"
+          toolbar={<TgRichTextInputToolbar/>}
+          fullWidth
+        />
+        <FileInput source="files" multiple>
+          <FileField source="src" title="title" download target={"_blank"}/>
+        </FileInput>
+      </SimpleForm>
+    </Create>
+  )
+};
