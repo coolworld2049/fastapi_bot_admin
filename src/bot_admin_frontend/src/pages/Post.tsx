@@ -11,7 +11,6 @@ import {
   FileField,
   FileInput,
   List,
-  required,
   RichTextField,
   SaveButton,
   SimpleForm,
@@ -37,22 +36,23 @@ export const PostPanel = () => {
           <ChipField source="title" size="small"/>
         </SingleFieldList>
       </ArrayField>
-      <DateField source="updated_at"/>
+      <DateField source="updated_at" showTime={true}/>
     </SimpleShowLayout>
   )
 };
 
 export const PostList = (props: any) => {
   return (
-    <List {...props}>
+    <List {...props} sort={{field: 'updated_at', order: 'DESC'}}>
       <Datagrid
         rowClick="edit"
         expand={<PostPanel {...props}/>}
         expandSingle={true}
       >
+
         <RichTextField source="text"/>
         <BooleanField source="is_published" label={"Published"}/>
-        <DateField source="created_at"/>
+        <DateField source="created_at" showTime={true}/>
       </Datagrid>
     </List>
   );
@@ -60,12 +60,12 @@ export const PostList = (props: any) => {
 
 const PostPublishButton = (props: any) => {
   const refresh = useRefresh();
-  const record = useRecordContext(props);
   const notify = useNotify();
+  const record = useRecordContext(props);
   const handleSuccess = () => {
     dataProvider.create(`posts/${record.id}/publish`,
       {
-        ...record.params
+        ...record.params,
       }
     ).then(r => {
       notify(`Post ${r.data.id} published!`, {type: 'success'})
@@ -81,7 +81,7 @@ const PostPublishButton = (props: any) => {
     mutationOptions={{onSuccess: handleSuccess, onError: handleError}}
     type="button"
     variant="text"
-    alwaysEnable={!record.is_published}
+    alwaysEnable={!(record.is_published)}
   />;
 };
 
@@ -100,8 +100,8 @@ export const PostEdit = (props: any) => (
   <Edit {...props} redirect="edit">
     <SimpleForm toolbar={<PostPublishToolbar/>}>
       <TextInput source="id" disabled/>
-      <BooleanInput source="is_published" label={"Published"} disabled={false}/>
-      <RichTextInput source="text" validate={[required()]}/>
+      <BooleanInput source="is_published"/>
+      <RichTextInput source="text"/>
       <FileInput source="files" multiple>
         <FileField source="src" title="title" download target={"_blank"}/>
       </FileInput>
@@ -111,12 +111,12 @@ export const PostEdit = (props: any) => (
 
 
 export const PostCreate = () => (
-  <Create>
+  <Create redirect={"edit"}>
     <SimpleForm>
       <TextInput source="id" disabled/>
-      <RichTextInput source="text" validate={[required()]}/>
+      <RichTextInput source="text"/>
       <FileInput source="files" multiple>
-        <FileField source="src" title="title"/>
+        <FileField source="src" title="title" download target={"_blank"}/>
       </FileInput>
     </SimpleForm>
   </Create>

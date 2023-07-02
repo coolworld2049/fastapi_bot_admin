@@ -118,7 +118,7 @@ async def create_post(
 ):
     post_in_obj = post_in.copy()
     if post_in.files:
-        post_in_obj.files = [x.json() for x in post_in.files]
+        post_in_obj.files = [x.dict() for x in post_in.files]
     post = await crud.post.create(db, obj_in=post_in_obj)
     return post
 

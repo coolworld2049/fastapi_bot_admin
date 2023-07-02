@@ -1,5 +1,6 @@
 import {
-  BooleanField, ChipField,
+  BooleanField,
+  ChipField,
   Create,
   Datagrid,
   DateField,
@@ -26,7 +27,7 @@ const UserPanel = (props: any) => (
       <TextField source="id"/>
     </ReferenceField>
     <TextField source="full_name"/>
-    <DateField source="updated_at"/>
+    <DateField source="updated_at" showTime={true}/>
     <BooleanField
       source="is_active"
       TrueIcon={PublicIcon}
@@ -43,7 +44,7 @@ export const UserList = (props: any) => {
     <FilterLiveSearch source="username" label={"Username"}/>,
   ];
   return (
-    <List {...props} filters={userFilters}>
+    <List {...props} filters={userFilters} sort={{field: 'updated_at', order: 'DESC'}}>
       <Datagrid
         rowClick="edit"
         bulkActionButtons={false}
@@ -54,7 +55,7 @@ export const UserList = (props: any) => {
         <ReferenceField source="telegram_id" reference="botusers" link={"show"}>
           <ChipField source="username"/>
         </ReferenceField>
-        <DateField source="created_at"/>
+        <DateField source="created_at" showTime={true}/>
       </Datagrid>
     </List>
   );

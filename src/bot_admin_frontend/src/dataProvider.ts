@@ -38,7 +38,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
       console.log({callback: "beforeUpdate", newFiles: newFiles, formerFiles: formerFiles})
       return Promise.all(newFiles.map(convertFileToBase64))
         .then(base64Pictures =>
-          base64Pictures.map((picture64, index, array) => ({
+          base64Pictures.map((picture64, index) => ({
             src: picture64,
             title: `${newFiles[index].title}`,
           }))
@@ -48,6 +48,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
               ...transformedNewFiles,
               ...formerFiles,
             ]
+            params.data.is_published = false;
             return params;
           }
         );
@@ -61,13 +62,13 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
       const newFiles = params.data.files?.filter(
         (p: { rawFile: any; }) => p.rawFile instanceof File
       );
-      const formerFiles = params.data.previousData.files?.filter(
+      const formerFiles = params.data.files?.filter(
         (p: { rawFile: any; }) => !(p.rawFile instanceof File)
       );
       console.log({callback: "beforeCreate", newFiles: newFiles, formerFiles: formerFiles})
       return Promise.all(newFiles.map(convertFileToBase64))
         .then(base64Pictures =>
-          base64Pictures.map((picture64, index, array) => ({
+          base64Pictures.map((picture64, index) => ({
             src: picture64,
             title: `${newFiles[index].title}`,
           }))
@@ -77,6 +78,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
               ...transformedNewFiles,
               ...formerFiles,
             ]
+            console.log(params)
             return params;
           }
         );
