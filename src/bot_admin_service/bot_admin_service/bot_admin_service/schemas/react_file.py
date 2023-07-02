@@ -13,20 +13,25 @@ class ReactFile(BaseModel):
 
     @property
     def content_type(self):
-        return self.src.split(",")[0].split(":")[1].split(";")[0]
+        try:
+            return self.src.split(",")[0].split(":")[1].split(";")[0]
+        except:
+            return None
 
     @property
     def encoding(self):
-        return self.src.split(",")[0].split(";")[1]
+        try:
+            return self.src.split(",")[0].split(";")[1]
+        except:
+            return None
 
     @property
     def file_data(self):
-        string = self.src.split(",")[1]
-        return base64.b64decode(string)
-
-    @property
-    def filename(self):
-        return self.title
+        try:
+            string = self.src.split(",")[1]
+            return base64.b64decode(string)
+        except:
+            return None
 
     class Config:
         orm_mode = True

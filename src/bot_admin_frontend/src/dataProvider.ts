@@ -8,7 +8,6 @@ const httpClient = (url: string, options: any = {}) => {
     authenticated: true,
     token: `Bearer ${localStorage.getItem("token")}`,
   };
-  console.log(url)
   return fetchUtils.fetchJson(url, options);
 };
 const baseDataProvider = simpleRestProvider(
@@ -23,7 +22,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
      * For posts update only, convert uploaded image in base 64 and attach it to
      * the `picture` sent property, with `src` and `title` attributes.
      */
-    resource: 'posts/',
+    resource: 'posts',
     beforeUpdate: async (params) => {
       console.log(params)
       if (params.data.files === undefined || params.data.files == null) {

@@ -139,36 +139,37 @@ async def publish_post(
     input_media: list[
         InputMediaPhoto | InputMediaVideo | InputMediaDocument | InputMediaAudio
     ] = []
-    if post.files and len(post.files) > 0:
-        files = [schemas.ReactFile(**x) for x in post.files]
-        for i, pf in enumerate(files):
-            media = BufferedInputFile(pf.file_data, pf.filename)
-            if pf.content_type.startswith("image"):
-                input_media_photo = InputMediaPhoto(
-                    media=media,
-                    parse_mode=post.parse_mode,
-                )
-                input_media.append(input_media_photo)
-            elif pf.content_type.startswith("video"):
-                input_media_video = InputMediaVideo(
-                    media=media,
-                    parse_mode=post.parse_mode,
-                )
-                input_media.append(input_media_video)
-            elif pf.content_type.startswith("audio"):
-                input_media_audio = InputMediaAudio(
-                    media=media,
-                    parse_mode=post.parse_mode,
-                )
-                input_media.append(input_media_audio)
-            elif pf.content_type.split("/")[0] in ["application", "text"]:
-                input_media_document = InputMediaDocument(
-                    media=media,
-                    parse_mode=post.parse_mode,
-                )
-                input_media.append(input_media_document)
-        if len(input_media) > 0:
-            input_media[0].caption = text
+    if post.files:
+        if len(post.files) > 0:
+            files = [schemas.ReactFile(**x) for x in post.files]
+            for i, pf in enumerate(files):
+                media = BufferedInputFile(pf.file_data, pf.title)
+                if pf.content_type.startswith("image"):
+                    input_media_photo = InputMediaPhoto(
+                        media=media,
+                        parse_mode=post.parse_mode,
+                    )
+                    input_media.append(input_media_photo)
+                elif pf.content_type.startswith("video"):
+                    input_media_video = InputMediaVideo(
+                        media=media,
+                        parse_mode=post.parse_mode,
+                    )
+                    input_media.append(input_media_video)
+                elif pf.content_type.startswith("audio"):
+                    input_media_audio = InputMediaAudio(
+                        media=media,
+                        parse_mode=post.parse_mode,
+                    )
+                    input_media.append(input_media_audio)
+                elif pf.content_type.split("/")[0] in ["application", "text"]:
+                    input_media_document = InputMediaDocument(
+                        media=media,
+                        parse_mode=post.parse_mode,
+                    )
+                    input_media.append(input_media_document)
+            if len(input_media) > 0:
+                input_media[0].caption = text
     users, total = await crud.bot_user.get_multi(
         db,
         RequestParams(limit=None),

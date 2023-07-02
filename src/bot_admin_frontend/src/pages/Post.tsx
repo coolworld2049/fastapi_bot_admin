@@ -31,11 +31,6 @@ export const PostPanel = () => {
   return (
     <SimpleShowLayout>
       <TextField source="id"/>
-      <ArrayField source="files">
-        <SingleFieldList>
-          <ChipField source="title" size="small"/>
-        </SingleFieldList>
-      </ArrayField>
       <DateField source="updated_at" showTime={true}/>
     </SimpleShowLayout>
   )
@@ -52,6 +47,11 @@ export const PostList = (props: any) => {
         expandSingle={true}
       >
         <RichTextField source="text"/>
+        <ArrayField source="files">
+          <SingleFieldList>
+            <ChipField source="title" size="small"/>
+          </SingleFieldList>
+        </ArrayField>
         <BooleanField source="is_published" label={"Published"}/>
         <DateField source="created_at" showTime={true}/>
       </Datagrid>
@@ -91,7 +91,7 @@ const PostPublishToolbar = (props: any) => {
     <Toolbar {...props}>
       <SaveButton/>
       <PostPublishButton variant="outlined" sx={{marginLeft: "10px"}}/>
-      <DeleteButton variant={"text"}/>
+      <DeleteButton variant={"text"} sx={{marginLeft: "10px"}}/>
     </Toolbar>
   )
 };
