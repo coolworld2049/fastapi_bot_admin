@@ -1,18 +1,20 @@
-import {Admin, ListGuesser, Resource, ShowGuesser} from 'react-admin';
+import {Admin, EditGuesser, Resource, Show, ShowGuesser} from 'react-admin';
 import {authProvider} from './authProvider';
 import {UserCreate, UserEdit, UserList} from "./pages/Menu/User";
 import PersonIcon from '@mui/icons-material/Person';
 import {BotUserList} from "./pages/Menu/BotUser";
-import {PostCreate} from "./pages/Menu/Post";
+import {PostCreate, PostEdit, PostList, PostPanel} from "./pages/Menu/Post";
 import dataProvider from "./dataProvider";
 import MyLayout from "./components/MyLayout";
-
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import TelegramIcon from '@mui/icons-material/Telegram';
 
 export const App = () => (
   <Admin
     dataProvider={dataProvider}
     authProvider={authProvider}
     layout={MyLayout}
+    requireAuth
   >
     <Resource
       options={{label: "Users"}}
@@ -25,17 +27,23 @@ export const App = () => (
     />
     <Resource
       options={{label: "Bot Users"}}
-      name="bot/users"
+      name="botusers"
       list={BotUserList}
       show={ShowGuesser}
-      icon={PersonIcon}
+      icon={TelegramIcon}
     />
     <Resource
       options={{label: "Posts"}}
-      name="bot/posts"
-      list={ListGuesser}
+      name="posts"
+      list={PostList}
+      edit={PostEdit}
+      show={
+        <Show>
+          <PostPanel/>
+        </Show>
+      }
       create={PostCreate}
-      icon={PersonIcon}
+      icon={PostAddIcon}
     />
   </Admin>
 );

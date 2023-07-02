@@ -1,5 +1,4 @@
-import {Datagrid, DateField, FilterLiveSearch, List, SimpleShowLayout, TextField,} from "react-admin";
-
+import {Datagrid, DateField, FilterLiveSearch, List, SimpleShowLayout, TextField, useRecordContext,} from "react-admin";
 
 const BotUserPanel = (props: any) => (
   <SimpleShowLayout>
@@ -13,6 +12,8 @@ const BotUserPanel = (props: any) => (
 );
 
 export const BotUserList = (props: any) => {
+  const record = useRecordContext();
+
   const userFilters = [
     <FilterLiveSearch source="username" label={"Username"}/>,
   ];
@@ -23,10 +24,10 @@ export const BotUserList = (props: any) => {
         expand={BotUserPanel}
         expandSingle={true}
       >
-        <TextField source="id"/>
         <TextField source="username"/>
         <DateField source="created_at"/>
       </Datagrid>
     </List>
   );
 };
+

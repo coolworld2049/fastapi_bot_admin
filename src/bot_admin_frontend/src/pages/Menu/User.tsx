@@ -3,9 +3,11 @@ import {
   Create,
   Datagrid,
   DateField,
-  Edit, FilterLiveSearch,
+  Edit,
+  FilterLiveSearch,
   List,
   PasswordInput,
+  ReferenceField,
   required,
   SimpleForm,
   SimpleShowLayout,
@@ -18,8 +20,10 @@ import PublicOffIcon from "@mui/icons-material/PublicOff";
 const UserPanel = (props: any) => (
   <SimpleShowLayout>
     <TextField source="id"/>
-    <TextField source="username"/>
-    <TextField source="telegram_id"/>
+
+    <ReferenceField source="telegram_id" reference="botusers">
+      <TextField source="id"/>
+    </ReferenceField>
     <TextField source="full_name"/>
     <DateField source="updated_at"/>
     <BooleanField
@@ -47,6 +51,9 @@ export const UserList = (props: any) => {
         expandSingle={true}
       >
         <TextField source="email"/>
+        <ReferenceField source="telegram_id" reference="botusers" link={"show"}>
+          <TextField source="username"/>
+        </ReferenceField>
         <DateField source="created_at"/>
       </Datagrid>
     </List>
