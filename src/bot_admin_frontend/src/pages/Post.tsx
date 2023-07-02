@@ -43,9 +43,11 @@ export const PostPanel = () => {
 
 export const PostList = (props: any) => {
   return (
-    <List {...props} sort={{field: 'updated_at', order: 'DESC'}}>
+    <List sort={{field: 'updated_at', order: 'DESC'}}
+          debounce={1000}>
       <Datagrid
         rowClick="edit"
+        bulkActionButtons={false}
         expand={<PostPanel {...props}/>}
         expandSingle={true}
       >
@@ -78,6 +80,7 @@ const PostPublishButton = (props: any) => {
     {...props}
     label={"Publish"}
     mutationOptions={{onSuccess: handleSuccess, onError: handleError}}
+    type={"button"}
     variant="outlined"
     alwaysEnable={!(record.is_published)}
   />;
@@ -87,7 +90,7 @@ const PostPublishToolbar = (props: any) => {
   return (
     <Toolbar {...props}>
       <SaveButton/>
-      <PostPublishButton variant="outlined"/>
+      <PostPublishButton variant="outlined" sx={{marginLeft: "10px"}}/>
       <DeleteButton variant={"text"}/>
     </Toolbar>
   )

@@ -8,6 +8,7 @@ import dataProvider from "./dataProvider";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import {darkTheme} from "./theme/Theme";
+import Dashboard from "./pages/Dashboard";
 
 export const App = () => (
   <Admin
@@ -15,6 +16,7 @@ export const App = () => (
     authProvider={authProvider}
     darkTheme={darkTheme}
     requireAuth
+    dashboard={Dashboard}
   >
     <Resource
       options={{label: "Users"}}
