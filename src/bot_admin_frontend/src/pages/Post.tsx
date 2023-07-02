@@ -25,7 +25,7 @@ import {
   useRefresh
 } from "react-admin";
 import {RichTextInput} from "ra-input-rich-text";
-import dataProvider from "../../dataProvider";
+import dataProvider from "../dataProvider";
 import React from "react";
 
 export const PostPanel = () => {

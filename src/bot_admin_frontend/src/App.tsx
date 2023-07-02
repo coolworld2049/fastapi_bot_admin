@@ -1,19 +1,19 @@
-import {Admin, EditGuesser, Resource, Show, ShowGuesser} from 'react-admin';
+import {Admin, Resource, Show, ShowGuesser} from 'react-admin';
 import {authProvider} from './authProvider';
-import {UserCreate, UserEdit, UserList} from "./pages/Menu/User";
+import {UserCreate, UserEdit, UserList} from "./pages/User";
 import PersonIcon from '@mui/icons-material/Person';
-import {BotUserList} from "./pages/Menu/BotUser";
-import {PostCreate, PostEdit, PostList, PostPanel} from "./pages/Menu/Post";
+import {BotUserList} from "./pages/BotUser";
+import {PostCreate, PostEdit, PostList, PostPanel} from "./pages/Post";
 import dataProvider from "./dataProvider";
-import MyLayout from "./components/MyLayout";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import {darkTheme} from "./theme/Theme";
 
 export const App = () => (
   <Admin
     dataProvider={dataProvider}
     authProvider={authProvider}
-    layout={MyLayout}
+    darkTheme={darkTheme}
     requireAuth
   >
     <Resource

@@ -1,5 +1,5 @@
 import {
-  BooleanField,
+  BooleanField, ChipField,
   Create,
   Datagrid,
   DateField,
@@ -16,6 +16,7 @@ import {
 } from "react-admin";
 import PublicIcon from "@mui/icons-material/Public";
 import PublicOffIcon from "@mui/icons-material/PublicOff";
+import React from "react";
 
 const UserPanel = (props: any) => (
   <SimpleShowLayout>
@@ -40,7 +41,6 @@ export const UserList = (props: any) => {
   const userFilters = [
     <FilterLiveSearch source="email" label={"Full Name"}/>,
     <FilterLiveSearch source="username" label={"Username"}/>,
-    <FilterLiveSearch source="telgram_id" label={"Telegam Id"}/>,
   ];
   return (
     <List {...props} filters={userFilters}>
@@ -52,7 +52,7 @@ export const UserList = (props: any) => {
       >
         <TextField source="email"/>
         <ReferenceField source="telegram_id" reference="botusers" link={"show"}>
-          <TextField source="username"/>
+          <ChipField source="username"/>
         </ReferenceField>
         <DateField source="created_at"/>
       </Datagrid>
