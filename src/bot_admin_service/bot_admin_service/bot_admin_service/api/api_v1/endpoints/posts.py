@@ -16,7 +16,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 from starlette.exceptions import HTTPException
 from starlette.requests import Request
-from starlette.responses import Response, JSONResponse
+from starlette.responses import Response
 
 from bot_admin_service import schemas, crud
 from bot_admin_service.api.deps import auth, params
@@ -138,7 +138,7 @@ async def publish_post(
     text = post.text.replace("<p>", "").replace("</p>", "")
     input_media: list[
         InputMediaPhoto | InputMediaVideo | InputMediaDocument | InputMediaAudio
-    ] = []
+        ] = []
     if post.files:
         if len(post.files) > 0:
             files = [schemas.ReactFile(**x) for x in post.files]
@@ -192,8 +192,8 @@ async def publish_post(
             send_messages_count += 1
         except Exception as e:
             logger.error(e)
-            return JSONResponse(
-                content=str(e.args), status_code=status.HTTP_400_BAD_REQUEST
+            raise HTTPException(
+                detail=str(e.args), status_code=status.HTTP_400_BAD_REQUEST
             )
     post = await crud.post.update(db, db_obj=post, obj_in=PostUpdate(is_published=True))
     return post

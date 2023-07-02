@@ -75,6 +75,7 @@ const PostPublishButton = (props: any) => {
   };
   const handleError = (error: any) => {
     notify(`Post ${record.id} not published!${error}`, {type: 'error'})
+    refresh()
   };
   return (<SaveButton
     {...props}
@@ -89,8 +90,9 @@ const PostPublishButton = (props: any) => {
 const PostPublishToolbar = (props: any) => {
   return (
     <Toolbar {...props}>
-      <SaveButton alwaysEnable={true}/>
-      <PostPublishButton variant="outlined" sx={{marginLeft: "10px"}}/>
+      <SaveButton {...props}
+      />
+      <PostPublishButton {...props} variant="outlined" sx={{marginLeft: "10px"}}/>
       <DeleteButton variant={"text"} sx={{marginLeft: "10px"}}/>
     </Toolbar>
   )
