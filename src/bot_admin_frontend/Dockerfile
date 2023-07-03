@@ -13,4 +13,4 @@ RUN yarn run build
 EXPOSE 3030
 EXPOSE 3000
 
-CMD ["yarn", "run", "serve"]
+CMD ["yarn", "run", "dev"]

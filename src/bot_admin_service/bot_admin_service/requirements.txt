@@ -28,5 +28,3 @@ pre-commit
 fastapi-mail
 asgi-correlation-id
 stringcase
-redis
-redis-om
