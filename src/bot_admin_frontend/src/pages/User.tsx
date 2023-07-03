@@ -1,6 +1,5 @@
 import {
   BooleanField,
-  BooleanInput,
   ChipField,
   Create,
   Datagrid,
@@ -9,6 +8,7 @@ import {
   FilterLiveSearch,
   List,
   PasswordInput,
+  ReferenceField,
   required,
   SimpleForm,
   SimpleShowLayout,
@@ -17,14 +17,17 @@ import {
 } from "react-admin";
 import PublicIcon from "@mui/icons-material/Public";
 import PublicOffIcon from "@mui/icons-material/PublicOff";
+import React from "react";
 
 const UserPanel = (props: any) => (
   <SimpleShowLayout>
     <TextField source="id"/>
-    <TextField source="username"/>
-    <TextField source="telegram_id"/>
+
+    <ReferenceField source="telegram_id" reference="botusers">
+      <TextField source="id"/>
+    </ReferenceField>
     <TextField source="full_name"/>
-    <DateField source="updated_at"/>
+    <DateField source="updated_at" showTime={true}/>
     <BooleanField
       source="is_active"
       TrueIcon={PublicIcon}
@@ -39,10 +42,9 @@ export const UserList = (props: any) => {
   const userFilters = [
     <FilterLiveSearch source="email" label={"Full Name"}/>,
     <FilterLiveSearch source="username" label={"Username"}/>,
-    <FilterLiveSearch source="telgram_id" label={"Telegam Id"}/>,
   ];
   return (
-    <List {...props} filters={userFilters}>
+    <List {...props} filters={userFilters} sort={{field: 'updated_at', order: 'DESC'}}>
       <Datagrid
         rowClick="edit"
         bulkActionButtons={false}
@@ -50,7 +52,10 @@ export const UserList = (props: any) => {
         expandSingle={true}
       >
         <TextField source="email"/>
-        <DateField source="created_at"/>
+        <ReferenceField source="telegram_id" reference="botusers" link={"show"}>
+          <ChipField source="username"/>
+        </ReferenceField>
+        <DateField source="created_at" showTime={true}/>
       </Datagrid>
     </List>
   );
@@ -60,14 +65,8 @@ export const UserEdit = (props: any) => (
   <Edit {...props} redirect="list">
     <SimpleForm>
       <TextInput source="id" disabled/>
-      <TextInput source="email"/>
-      <ChipField source="username"/>
-      <TextField source="telegram_id"/>
-      <BooleanInput
-        {...props}
-        source="is_active"
-        defaultValue={true}
-      />
+      <TextInput source="username"/>
+      <TextInput source="telegram_id" label={"Telegram id"}/>
     </SimpleForm>
   </Edit>
 );
@@ -78,6 +77,7 @@ export const UserCreate = (props: any) => {
       <SimpleForm mode="onBlur" reValidateMode="onBlur">
         <TextInput source="email" validate={required()}/>
         <PasswordInput source="password" validate={required()}/>
+        <TextInput source="username"/>
       </SimpleForm>
     </Create>
   );

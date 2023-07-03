@@ -75,6 +75,13 @@ export interface BotUser {
 /**
  * 
  * @export
+ * @interface Files
+ */
+export interface Files {
+}
+/**
+ * 
+ * @export
  * @interface HTTPValidationError
  */
 export interface HTTPValidationError {
@@ -91,6 +98,136 @@ export interface HTTPValidationError {
  * @interface LocationInner
  */
 export interface LocationInner {
+}
+/**
+ * 
+ * @export
+ * @interface Post
+ */
+export interface Post {
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {Files}
+     * @memberof Post
+     */
+    'files'?: Files;
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
+    'parse_mode'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Post
+     */
+    'is_published'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Post
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
+    'created_at'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Post
+     */
+    'updated_at'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PostCreate
+ */
+export interface PostCreate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PostCreate
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {Files}
+     * @memberof PostCreate
+     */
+    'files'?: Files;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostCreate
+     */
+    'parse_mode'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PostCreate
+     */
+    'is_published'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface PostUpdate
+ */
+export interface PostUpdate {
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUpdate
+     */
+    'text'?: string;
+    /**
+     * 
+     * @type {Files}
+     * @memberof PostUpdate
+     */
+    'files'?: Files;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUpdate
+     */
+    'parse_mode'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PostUpdate
+     */
+    'is_published'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface ReactFile
+ */
+export interface ReactFile {
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactFile
+     */
+    'src'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ReactFile
+     */
+    'title'?: string;
 }
 /**
  * 
@@ -403,14 +540,14 @@ export const EmailsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendEmailAsynchronousApiV1EmailSendPost: async (subject: string, recipients: string, body: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        sendEmailAsynchronousApiV1EmailsSendPost: async (subject: string, recipients: string, body: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'subject' is not null or undefined
-            assertParamExists('sendEmailAsynchronousApiV1EmailSendPost', 'subject', subject)
+            assertParamExists('sendEmailAsynchronousApiV1EmailsSendPost', 'subject', subject)
             // verify required parameter 'recipients' is not null or undefined
-            assertParamExists('sendEmailAsynchronousApiV1EmailSendPost', 'recipients', recipients)
+            assertParamExists('sendEmailAsynchronousApiV1EmailsSendPost', 'recipients', recipients)
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('sendEmailAsynchronousApiV1EmailSendPost', 'body', body)
-            const localVarPath = `/api/v1/email/send`;
+            assertParamExists('sendEmailAsynchronousApiV1EmailsSendPost', 'body', body)
+            const localVarPath = `/api/v1/emails/send`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -467,8 +604,8 @@ export const EmailsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sendEmailAsynchronousApiV1EmailSendPost(subject: string, recipients: string, body: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sendEmailAsynchronousApiV1EmailSendPost(subject, recipients, body, options);
+        async sendEmailAsynchronousApiV1EmailsSendPost(subject: string, recipients: string, body: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sendEmailAsynchronousApiV1EmailsSendPost(subject, recipients, body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -490,8 +627,8 @@ export const EmailsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendEmailAsynchronousApiV1EmailSendPost(subject: string, recipients: string, body: any, options?: any): AxiosPromise<any> {
-            return localVarFp.sendEmailAsynchronousApiV1EmailSendPost(subject, recipients, body, options).then((request) => request(axios, basePath));
+        sendEmailAsynchronousApiV1EmailsSendPost(subject: string, recipients: string, body: any, options?: any): AxiosPromise<any> {
+            return localVarFp.sendEmailAsynchronousApiV1EmailsSendPost(subject, recipients, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -513,8 +650,8 @@ export class EmailsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof EmailsApi
      */
-    public sendEmailAsynchronousApiV1EmailSendPost(subject: string, recipients: string, body: any, options?: AxiosRequestConfig) {
-        return EmailsApiFp(this.configuration).sendEmailAsynchronousApiV1EmailSendPost(subject, recipients, body, options).then((request) => request(this.axios, this.basePath));
+    public sendEmailAsynchronousApiV1EmailsSendPost(subject: string, recipients: string, body: any, options?: AxiosRequestConfig) {
+        return EmailsApiFp(this.configuration).sendEmailAsynchronousApiV1EmailsSendPost(subject, recipients, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -674,6 +811,506 @@ export class LoginApi extends BaseAPI {
 
 
 /**
+ * PostsApi - axios parameter creator
+ * @export
+ */
+export const PostsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create Post
+         * @param {PostCreate} postCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPostApiV1PostsPost: async (postCreate: PostCreate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'postCreate' is not null or undefined
+            assertParamExists('createPostApiV1PostsPost', 'postCreate', postCreate)
+            const localVarPath = `/api/v1/posts/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(postCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete Post
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePostApiV1PostsIdDelete: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deletePostApiV1PostsIdDelete', 'id', id)
+            const localVarPath = `/api/v1/posts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Publish Post
+         * @param {number} id 
+         * @param {number} [delay] delay in seconds between send messages
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishPostApiV1PostsIdPublishPost: async (id: number, delay?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('publishPostApiV1PostsIdPublishPost', 'id', id)
+            const localVarPath = `/api/v1/posts/{id}/publish`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+            if (delay !== undefined) {
+                localVarQueryParameter['delay'] = delay;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Read Post By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readPostByIdApiV1PostsIdGet: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('readPostByIdApiV1PostsIdGet', 'id', id)
+            const localVarPath = `/api/v1/posts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Read Posts
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readPostsApiV1PostsGet: async (sort?: string, range?: string, filter?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/posts/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (range !== undefined) {
+                localVarQueryParameter['range'] = range;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter['filter'] = filter;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update Post
+         * @param {number} id 
+         * @param {PostUpdate} postUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePostApiV1PostsIdPut: async (id: number, postUpdate: PostUpdate, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updatePostApiV1PostsIdPut', 'id', id)
+            // verify required parameter 'postUpdate' is not null or undefined
+            assertParamExists('updatePostApiV1PostsIdPut', 'postUpdate', postUpdate)
+            const localVarPath = `/api/v1/posts/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication OAuth2PasswordBearer required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(postUpdate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PostsApi - functional programming interface
+ * @export
+ */
+export const PostsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PostsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Post
+         * @param {PostCreate} postCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPostApiV1PostsPost(postCreate: PostCreate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPostApiV1PostsPost(postCreate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Delete Post
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePostApiV1PostsIdDelete(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePostApiV1PostsIdDelete(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Publish Post
+         * @param {number} id 
+         * @param {number} [delay] delay in seconds between send messages
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publishPostApiV1PostsIdPublishPost(id: number, delay?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publishPostApiV1PostsIdPublishPost(id, delay, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Read Post By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readPostByIdApiV1PostsIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPostByIdApiV1PostsIdGet(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Read Posts
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readPostsApiV1PostsGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Post>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readPostsApiV1PostsGet(sort, range, filter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update Post
+         * @param {number} id 
+         * @param {PostUpdate} postUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePostApiV1PostsIdPut(id: number, postUpdate: PostUpdate, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Post>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePostApiV1PostsIdPut(id, postUpdate, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * PostsApi - factory interface
+ * @export
+ */
+export const PostsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PostsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Post
+         * @param {PostCreate} postCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPostApiV1PostsPost(postCreate: PostCreate, options?: any): AxiosPromise<Post> {
+            return localVarFp.createPostApiV1PostsPost(postCreate, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete Post
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePostApiV1PostsIdDelete(id: number, options?: any): AxiosPromise<Post> {
+            return localVarFp.deletePostApiV1PostsIdDelete(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Publish Post
+         * @param {number} id 
+         * @param {number} [delay] delay in seconds between send messages
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publishPostApiV1PostsIdPublishPost(id: number, delay?: number, options?: any): AxiosPromise<Post> {
+            return localVarFp.publishPostApiV1PostsIdPublishPost(id, delay, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Read Post By Id
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readPostByIdApiV1PostsIdGet(id: number, options?: any): AxiosPromise<Post> {
+            return localVarFp.readPostByIdApiV1PostsIdGet(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Read Posts
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
+         * @param {string} [range] Format: &#x60;[start, end]&#x60;
+         * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readPostsApiV1PostsGet(sort?: string, range?: string, filter?: string, options?: any): AxiosPromise<Array<Post>> {
+            return localVarFp.readPostsApiV1PostsGet(sort, range, filter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update Post
+         * @param {number} id 
+         * @param {PostUpdate} postUpdate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePostApiV1PostsIdPut(id: number, postUpdate: PostUpdate, options?: any): AxiosPromise<Post> {
+            return localVarFp.updatePostApiV1PostsIdPut(id, postUpdate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PostsApi - object-oriented interface
+ * @export
+ * @class PostsApi
+ * @extends {BaseAPI}
+ */
+export class PostsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create Post
+     * @param {PostCreate} postCreate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public createPostApiV1PostsPost(postCreate: PostCreate, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).createPostApiV1PostsPost(postCreate, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete Post
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public deletePostApiV1PostsIdDelete(id: number, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).deletePostApiV1PostsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Publish Post
+     * @param {number} id 
+     * @param {number} [delay] delay in seconds between send messages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public publishPostApiV1PostsIdPublishPost(id: number, delay?: number, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).publishPostApiV1PostsIdPublishPost(id, delay, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Read Post By Id
+     * @param {number} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public readPostByIdApiV1PostsIdGet(id: number, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).readPostByIdApiV1PostsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Read Posts
+     * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
+     * @param {string} [range] Format: &#x60;[start, end]&#x60;
+     * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public readPostsApiV1PostsGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).readPostsApiV1PostsGet(sort, range, filter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Post
+     * @param {number} id 
+     * @param {PostUpdate} postUpdate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PostsApi
+     */
+    public updatePostApiV1PostsIdPut(id: number, postUpdate: PostUpdate, options?: AxiosRequestConfig) {
+        return PostsApiFp(this.configuration).updatePostApiV1PostsIdPut(id, postUpdate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * SignupApi - axios parameter creator
  * @export
  */
@@ -787,129 +1424,16 @@ export class SignupApi extends BaseAPI {
 export const TelegramApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Bot Webhook
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost: async (body: object, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost', 'body', body)
-            const localVarPath = `/api/v1/bot6216916558:AAHyDA_IPKLGYe1GPOuhuYFoI7IphWLu4Us`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Publish Post
-         * @param {string} text 
-         * @param {'HTML' | 'MarkdownV2'} [parseMode] 
-         * @param {boolean} [disableWebPagePreview] 
-         * @param {boolean} [disableNotification] 
-         * @param {boolean} [protectContent] 
-         * @param {number} [delay] delay in seconds between send messages
-         * @param {Array<File>} [files] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost: async (text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'text' is not null or undefined
-            assertParamExists('publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost', 'text', text)
-            const localVarPath = `/api/v1/bot6216916558:AAHyDA_IPKLGYe1GPOuhuYFoI7IphWLu4Us/post`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
-
-            // authentication OAuth2PasswordBearer required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "OAuth2PasswordBearer", [], configuration)
-
-            if (parseMode !== undefined) {
-                localVarQueryParameter['parse_mode'] = parseMode;
-            }
-
-            if (disableWebPagePreview !== undefined) {
-                localVarQueryParameter['disable_web_page_preview'] = disableWebPagePreview;
-            }
-
-            if (disableNotification !== undefined) {
-                localVarQueryParameter['disable_notification'] = disableNotification;
-            }
-
-            if (protectContent !== undefined) {
-                localVarQueryParameter['protect_content'] = protectContent;
-            }
-
-            if (delay !== undefined) {
-                localVarQueryParameter['delay'] = delay;
-            }
-
-            if (files) {
-                files.forEach((element) => {
-                    localVarFormParams.append('files', element as any);
-                })
-            }
-
-    
-            if (text !== undefined) { 
-                localVarFormParams.append('text', text as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve bot users.
          * @summary Read Bot Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readBotUsersApiV1BotUsersGet: async (sort?: string, range?: string, filter?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/bot/users`;
+        readBotUsersApiV1BotusersGet: async (sort?: string, range?: string, filter?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/botusers/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -955,10 +1479,10 @@ export const TelegramApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readUserByIdApiV1BotUsersIdGet: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        readUserByIdApiV1BotusersIdGet: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('readUserByIdApiV1BotUsersIdGet', 'id', id)
-            const localVarPath = `/api/v1/bot/users/{id}`
+            assertParamExists('readUserByIdApiV1BotusersIdGet', 'id', id)
+            const localVarPath = `/api/v1/botusers/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -997,44 +1521,16 @@ export const TelegramApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TelegramApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Bot Webhook
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body: object, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Publish Post
-         * @param {string} text 
-         * @param {'HTML' | 'MarkdownV2'} [parseMode] 
-         * @param {boolean} [disableWebPagePreview] 
-         * @param {boolean} [disableNotification] 
-         * @param {boolean} [protectContent] 
-         * @param {number} [delay] delay in seconds between send messages
-         * @param {Array<File>} [files] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<any>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Retrieve bot users.
          * @summary Read Bot Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BotUser>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readBotUsersApiV1BotUsersGet(sort, range, filter, options);
+        async readBotUsersApiV1BotusersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BotUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readBotUsersApiV1BotusersGet(sort, range, filter, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1044,8 +1540,8 @@ export const TelegramApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async readUserByIdApiV1BotUsersIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.readUserByIdApiV1BotUsersIdGet(id, options);
+        async readUserByIdApiV1BotusersIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readUserByIdApiV1BotusersIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1059,42 +1555,16 @@ export const TelegramApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = TelegramApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Bot Webhook
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body: object, options?: any): AxiosPromise<any> {
-            return localVarFp.botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Publish Post
-         * @param {string} text 
-         * @param {'HTML' | 'MarkdownV2'} [parseMode] 
-         * @param {boolean} [disableWebPagePreview] 
-         * @param {boolean} [disableNotification] 
-         * @param {boolean} [protectContent] 
-         * @param {number} [delay] delay in seconds between send messages
-         * @param {Array<File>} [files] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options?: any): AxiosPromise<any> {
-            return localVarFp.publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Retrieve bot users.
          * @summary Read Bot Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: any): AxiosPromise<Array<BotUser>> {
-            return localVarFp.readBotUsersApiV1BotUsersGet(sort, range, filter, options).then((request) => request(axios, basePath));
+        readBotUsersApiV1BotusersGet(sort?: string, range?: string, filter?: string, options?: any): AxiosPromise<Array<BotUser>> {
+            return localVarFp.readBotUsersApiV1BotusersGet(sort, range, filter, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a specific bot user.
@@ -1103,8 +1573,8 @@ export const TelegramApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        readUserByIdApiV1BotUsersIdGet(id: number, options?: any): AxiosPromise<User> {
-            return localVarFp.readUserByIdApiV1BotUsersIdGet(id, options).then((request) => request(axios, basePath));
+        readUserByIdApiV1BotusersIdGet(id: number, options?: any): AxiosPromise<User> {
+            return localVarFp.readUserByIdApiV1BotusersIdGet(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1117,47 +1587,17 @@ export const TelegramApiFactory = function (configuration?: Configuration, baseP
  */
 export class TelegramApi extends BaseAPI {
     /**
-     * 
-     * @summary Bot Webhook
-     * @param {object} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TelegramApi
-     */
-    public botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body: object, options?: AxiosRequestConfig) {
-        return TelegramApiFp(this.configuration).botWebhookApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPost(body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Publish Post
-     * @param {string} text 
-     * @param {'HTML' | 'MarkdownV2'} [parseMode] 
-     * @param {boolean} [disableWebPagePreview] 
-     * @param {boolean} [disableNotification] 
-     * @param {boolean} [protectContent] 
-     * @param {number} [delay] delay in seconds between send messages
-     * @param {Array<File>} [files] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TelegramApi
-     */
-    public publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text: string, parseMode?: 'HTML' | 'MarkdownV2', disableWebPagePreview?: boolean, disableNotification?: boolean, protectContent?: boolean, delay?: number, files?: Array<File>, options?: AxiosRequestConfig) {
-        return TelegramApiFp(this.configuration).publishPostApiV1Bot6216916558AAHyDAIPKLGYe1GPOuhuYFoI7IphWLu4UsPostPost(text, parseMode, disableWebPagePreview, disableNotification, protectContent, delay, files, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Retrieve bot users.
      * @summary Read Bot Users
-     * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+     * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
      * @param {string} [range] Format: &#x60;[start, end]&#x60;
      * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TelegramApi
      */
-    public readBotUsersApiV1BotUsersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig) {
-        return TelegramApiFp(this.configuration).readBotUsersApiV1BotUsersGet(sort, range, filter, options).then((request) => request(this.axios, this.basePath));
+    public readBotUsersApiV1BotusersGet(sort?: string, range?: string, filter?: string, options?: AxiosRequestConfig) {
+        return TelegramApiFp(this.configuration).readBotUsersApiV1BotusersGet(sort, range, filter, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1168,8 +1608,8 @@ export class TelegramApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof TelegramApi
      */
-    public readUserByIdApiV1BotUsersIdGet(id: number, options?: AxiosRequestConfig) {
-        return TelegramApiFp(this.configuration).readUserByIdApiV1BotUsersIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    public readUserByIdApiV1BotusersIdGet(id: number, options?: AxiosRequestConfig) {
+        return TelegramApiFp(this.configuration).readUserByIdApiV1BotusersIdGet(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1333,7 +1773,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Retrieve users.
          * @summary Read Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
@@ -1519,7 +1959,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
         /**
          * Retrieve users.
          * @summary Read Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
@@ -1604,7 +2044,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         /**
          * Retrieve users.
          * @summary Read Users
-         * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+         * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
          * @param {string} [range] Format: &#x60;[start, end]&#x60;
          * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
          * @param {*} [options] Override http request option.
@@ -1694,7 +2134,7 @@ export class UsersApi extends BaseAPI {
     /**
      * Retrieve users.
      * @summary Read Users
-     * @param {string} [sort] Format: &#x60;{\&quot;field_name\&quot;: \&quot;direction\&quot;}&#x60;
+     * @param {string} [sort] Format: &#x60;[\&quot;field_name\&quot;, \&quot;direction\&quot;]&#x60;
      * @param {string} [range] Format: &#x60;[start, end]&#x60;
      * @param {string} [filter] Format: &#x60;{\&quot;field_name\&quot;: \&quot;value\&quot;}&#x60;
      * @param {*} [options] Override http request option.

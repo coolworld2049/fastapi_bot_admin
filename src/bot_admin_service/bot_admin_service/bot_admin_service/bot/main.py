@@ -1,7 +1,6 @@
 import asyncio
 
 from aiogram import Dispatcher
-from aredis_om import Migrator
 from loguru import logger
 
 from bot_admin_service.bot.dispatcher import dp
@@ -24,7 +23,6 @@ async def startup_bot(dp: Dispatcher) -> None:
     dp.include_routers(
         menu.router,
     )
-    await Migrator().run()
 
 
 async def shutdown_bot(dp: Dispatcher) -> None:

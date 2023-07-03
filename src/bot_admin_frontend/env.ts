@@ -1,4 +1,4 @@
-import {Configuration, LoginApi, UsersApi} from "./src/generated";
+import {Configuration, LoginApi, UsersApi, PostsApi, PostMediasApi} from "./src/generated";
 
 const readAccessToken = async (): Promise<string> => {
   return localStorage.getItem("token") || "";
@@ -13,3 +13,4 @@ const apiConfig: Configuration = new Configuration({
 
 export const authApi: LoginApi = new LoginApi(apiConfig);
 export const userApi: UsersApi = new UsersApi(apiConfig);
+export const postApi: PostsApi = new PostsApi(apiConfig);

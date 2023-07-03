@@ -23,7 +23,7 @@ def parse_params(
             None,
             alias="sort",
             description='Format: `["field_name", "direction"]`',
-            example='["id", "ASC"]',
+            example='["id", "DESC"]',
         ),
         range_: Optional[str] = Query(
             None,

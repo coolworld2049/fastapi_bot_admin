@@ -1,18 +1,26 @@
-import {Admin, Resource, ShowGuesser} from 'react-admin';
-import {dataProvider} from './dataProvider';
+import {Admin, Resource, Show, ShowGuesser} from 'react-admin';
 import {authProvider} from './authProvider';
-import {UserCreate, UserEdit, UserList} from "./pages/Menu/User";
+import {UserCreate, UserEdit, UserList} from "./pages/User";
 import PersonIcon from '@mui/icons-material/Person';
-import {BotUserList} from "./pages/Menu/BotUser";
+import {BotUserList} from "./pages/BotUser";
+import {PostCreate, PostEdit, PostList, PostPanel} from "./pages/Post";
+import dataProvider from "./dataProvider";
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import {darkTheme} from "./theme/Theme";
+import Dashboard from "./pages/Dashboard";
 
 export const App = () => (
   <Admin
     dataProvider={dataProvider}
     authProvider={authProvider}
+    darkTheme={darkTheme}
+    requireAuth
+    dashboard={Dashboard}
   >
     <Resource
       options={{label: "Users"}}
-      name="users/"
+      name="users"
       list={UserList}
       edit={UserEdit}
       create={UserCreate}
@@ -21,10 +29,23 @@ export const App = () => (
     />
     <Resource
       options={{label: "Bot Users"}}
-      name="bot/users/"
+      name="botusers"
       list={BotUserList}
       show={ShowGuesser}
-      icon={PersonIcon}
+      icon={TelegramIcon}
+    />
+    <Resource
+      options={{label: "Posts"}}
+      name="posts"
+      list={PostList}
+      edit={PostEdit}
+      show={
+        <Show>
+          <PostPanel/>
+        </Show>
+      }
+      create={PostCreate}
+      icon={PostAddIcon}
     />
   </Admin>
 );

@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import (
 from bot_admin_service.core.config import get_app_settings
 
 engine = create_async_engine(get_app_settings().postgres_asyncpg_url)
-session = async_sessionmaker(engine, autocommit=False)
+session = async_sessionmaker(engine, expire_on_commit=False)
 
 if get_app_settings().SQLALCHEMY_PROFILE_QUERY_MODE:
 
@@ -43,9 +43,7 @@ if get_app_settings().SQLALCHEMY_PROFILE_QUERY_MODE:
 async def get_db() -> AsyncSession:
     s = session()
     try:
-        await s.begin()
         yield s
-        await s.commit()
     except Exception as e:  # noqa
         logger.debug(f"{e.__class__} {e} - ROLLBACK")
         await s.rollback()
