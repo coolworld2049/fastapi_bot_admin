@@ -2,7 +2,7 @@
   "name": "bot-admin-frontend",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "build": "vite build",
     "serve": "vite preview",
     "type-check": "tsc --noEmit",

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, Any
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -28,3 +28,8 @@ class Post(PostBase):
 
     class Config:
         orm_mode = True
+
+
+class PostDetails(Post):
+    users_count: Optional[int]
+    sent_count: Optional[int]

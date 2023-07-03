@@ -77,17 +77,7 @@ async def update_post(
     post = await crud.post.get(db, id)
     if not post:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
-    if post_in.files:
-        if len(post_in.files) > 10:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="the number of files must be less than 10",
-            )
-        if sum(list(map(lambda x: len(bytes(x.file_data)), post_in.files))) > 52428800:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="the size of files must be less than 50MB",
-            )
+    crud.post.check_files_size(post_in)
     post = await crud.post.update(db, db_obj=post, obj_in=post_in)
     return post
 
@@ -119,11 +109,12 @@ async def create_post(
     post_in_obj = post_in.copy()
     if post_in.files:
         post_in_obj.files = [x.dict() for x in post_in.files]
+    crud.post.check_files_size(post_in)
     post = await crud.post.create(db, obj_in=post_in_obj)
     return post
 
 
-@router.post("/{id}/publish", response_model=schemas.Post)
+@router.post("/{id}/publish", response_model=schemas.PostDetails)
 async def publish_post(
     request: Request,
     id: int,
@@ -138,7 +129,7 @@ async def publish_post(
     text = post.text.replace("<p>", "").replace("</p>", "")
     input_media: list[
         InputMediaPhoto | InputMediaVideo | InputMediaDocument | InputMediaAudio
-        ] = []
+    ] = []
     if post.files:
         if len(post.files) > 0:
             files = [schemas.ReactFile(**x) for x in post.files]
@@ -196,4 +187,9 @@ async def publish_post(
                 detail=str(e.args), status_code=status.HTTP_400_BAD_REQUEST
             )
     post = await crud.post.update(db, db_obj=post, obj_in=PostUpdate(is_published=True))
-    return post
+    post_resp = schemas.PostDetails(
+        **post.__dict__,
+        users_count=len(users),
+        sent_count=send_messages_count,
+    )
+    return post_resp

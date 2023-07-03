@@ -4,11 +4,8 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-# data:video/mp4;base64,...
-
-
 class ReactFile(BaseModel):
-    src: Optional[str]
+    src: Optional[str]  # data:video/mp4;base64,<encoded file>
     title: Optional[str]
 
     @property

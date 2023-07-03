@@ -39,10 +39,11 @@ export const PostPanel = () => {
 export const PostList = (props: any) => {
   return (
     <List sort={{field: 'updated_at', order: 'DESC'}}
-          debounce={1000}>
+          debounce={1000}
+          perPage={5}
+    >
       <Datagrid
         rowClick="edit"
-        bulkActionButtons={false}
         expand={<PostPanel {...props}/>}
         expandSingle={true}
       >
@@ -69,12 +70,13 @@ const PostPublishButton = (props: any) => {
         ...record.params,
       }
     ).then(r => {
-      notify(`Post ${r.data.id} published!`, {type: 'success'})
+      notify(`Post ${r.data.id} published! Bot users count: ${r.data.users_count}, Sent count ${r.data.sent_count}`,
+        {type: 'success'})
       refresh()
     })
   };
   const handleError = (error: any) => {
-    notify(`Post ${record.id} not published!${error}`, {type: 'error'})
+    notify(`Post ${record.id} is not published!${error}`, {type: 'error'})
     refresh()
   };
   return (<SaveButton

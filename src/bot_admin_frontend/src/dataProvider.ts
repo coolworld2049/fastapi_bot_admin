@@ -24,7 +24,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
      */
     resource: 'posts',
     beforeUpdate: async (params) => {
-      console.log(params)
+      // console.log(params)
       if (params.data.files === undefined || params.data.files == null) {
         console.log({files: params.data.files})
         return Promise.resolve(params);
@@ -35,7 +35,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
       const formerFiles = params.data.files?.filter(
         (p: { rawFile: any; }) => !(p.rawFile instanceof File)
       );
-      console.log({callback: "beforeUpdate", newFiles: newFiles, formerFiles: formerFiles})
+      // console.log({callback: "beforeUpdate", newFiles: newFiles, formerFiles: formerFiles})
       return Promise.all(newFiles.map(convertFileToBase64))
         .then(base64Pictures =>
           base64Pictures.map((picture64, index) => ({
@@ -54,7 +54,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
         );
     },
     beforeCreate: async (params) => {
-      console.log(params)
+      // console.log(params)
       if (params.data.files === undefined || params.data.files == null) {
         console.log({files: params.data.files})
         return Promise.resolve(params);
@@ -65,7 +65,7 @@ const dataProvider = withLifecycleCallbacks(baseDataProvider, [
       const formerFiles = params.data.files?.filter(
         (p: { rawFile: any; }) => !(p.rawFile instanceof File)
       );
-      console.log({callback: "beforeCreate", newFiles: newFiles, formerFiles: formerFiles})
+      // console.log({callback: "beforeCreate", newFiles: newFiles, formerFiles: formerFiles})
       return Promise.all(newFiles.map(convertFileToBase64))
         .then(base64Pictures =>
           base64Pictures.map((picture64, index) => ({
