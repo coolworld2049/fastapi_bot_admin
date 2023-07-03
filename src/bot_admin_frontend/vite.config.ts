@@ -1,14 +1,33 @@
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-    plugins: [react()],
-    define: {
+export default defineConfig(({mode}) => {
+  if (mode === 'development') {
+    return {
+      plugins: [react()],
+      define: {
         'process.env': process.env,
-    },
-    server: {
+      },
+      server: {
         host: true,
-    },
-    base: './',
+        port: 3030,
+      },
+      base: './',
+    };
+  } else {
+    return {
+      plugins: [react()],
+      define: {
+        'process.env': process.env,
+      },
+      server: {
+        host: true,
+        port: 3030,
+      },
+      build: {
+        outDir: 'dist',
+      },
+      base: './',
+    };
+  }
 });
