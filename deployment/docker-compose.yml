@@ -9,18 +9,18 @@ services:
     environment:
       - STAGE=prod
       - MAX_WORKERS=1
+    depends_on:
+      - bot_admin_frontend
 
   ngrok:
     extends:
       file: ../src/bot_admin_service/docker-compose.yml
       service: ngrok
 
-#  bot_admin_frontend:
-#    extends:
-#      file: ../src/bot_admin_frontend/docker-compose.yml
-#      service: bot_admin_frontend
-#    environment:
-#      - VITE_REST_URL=http://bot_admin_service:80
+  bot_admin_frontend:
+    extends:
+      file: ../src/bot_admin_frontend/docker-compose.yml
+      service: bot_admin_frontend
 
   postgresql:
     image: bitnami/postgresql:latest

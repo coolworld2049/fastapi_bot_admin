@@ -10,7 +10,7 @@ services:
     environment:
       - WEBHOOK_ENDPOINT
     ports:
-      - "80"
+      - "80:80"
     restart: always
     depends_on:
       - ngrok

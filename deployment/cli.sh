@@ -10,8 +10,9 @@ install() {
   docker-compose -p "$project_name" -f "$compose_file" up -d ngrok
   echo "Please enter ngrok https endpoint url (https://dashboard.ngrok.com/cloud-edge/endpoints):"
   read webhook_endpoint
-  WEBHOOK_ENDPOINT=${webhook_endpoint} docker-compose -p "$project_name" -f "$compose_file" up -d bot_admin_service
   docker-compose -p "$project_name" -f "$compose_file" up -d postgresql
+  WEBHOOK_ENDPOINT=${webhook_endpoint} docker-compose -p "$project_name" -f "$compose_file" up -d bot_admin_service
+  docker-compose -p "$project_name" -f "$compose_file" up -d bot_admin_frontend
 
 }
 
