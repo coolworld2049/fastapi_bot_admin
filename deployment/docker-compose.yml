@@ -14,6 +14,8 @@ services:
     extends:
       file: ../src/bot_admin_frontend/docker-compose.yml
       service: bot_admin_frontend
+    environment:
+      - VITE_REST_URL=http://bot_admin_service:80
 
   postgresql:
     image: bitnami/postgresql:latest
@@ -48,9 +50,6 @@ services:
     restart: always
 
 volumes:
-  redis-data:
-    labels:
-      keep:
   postgres-data:
     labels:
       keep:

@@ -3,10 +3,11 @@ from pydantic import EmailStr
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot_admin_service import crud, schemas
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.core.config import get_app_settings
 from bot_admin_service.db.base import Base
-from bot_admin_service.db.session import engine, get_db
+from bot_admin_service.db.session import engine
 
 
 async def create_first_superuser(db: AsyncSession):

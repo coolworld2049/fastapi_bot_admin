@@ -1,7 +1,7 @@
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from bot_admin_service import schemas
+import bot_admin_service.schemas as schemas
 from bot_admin_service.crud.base import CRUDBase
 from bot_admin_service.db import models
 from bot_admin_service.schemas import PostCreate, PostUpdate

@@ -6,7 +6,6 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlalchemy import select

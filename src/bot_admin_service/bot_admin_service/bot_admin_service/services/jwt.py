@@ -5,13 +5,13 @@ from datetime import timedelta
 from jose import jwt, JWTError
 from loguru import logger
 
-from bot_admin_service import schemas
-from bot_admin_service.db import models
+import bot_admin_service.schemas as schemas
 from bot_admin_service.api.exceptions import (
     CouldNotValidateCredentialsException,
     AccessTokenHasExpiredException,
 )
 from bot_admin_service.core.config import get_app_settings
+from bot_admin_service.db import models
 
 
 def encode_access_token(

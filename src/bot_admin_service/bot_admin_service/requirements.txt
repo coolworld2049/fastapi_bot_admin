@@ -12,7 +12,6 @@ python-multipart
 asyncpg
 asyncpg_utils
 psycopg2-binary
-psycopg2
 python-jose
 pytest
 bcrypt

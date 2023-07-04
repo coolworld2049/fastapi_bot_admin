@@ -86,6 +86,9 @@ def configure_logging() -> None:  # pragma: no cover
     logging.getLogger("uvicorn").handlers = [intercept_handler]
     logging.getLogger("uvicorn.access").handlers = [intercept_handler]
 
+    logging.getLogger("gunicorn").handlers = [intercept_handler]
+    logging.getLogger("gunicorn.access").handlers = [intercept_handler]
+
     # set logs output, level and format
     logger.remove()
     logger.add(

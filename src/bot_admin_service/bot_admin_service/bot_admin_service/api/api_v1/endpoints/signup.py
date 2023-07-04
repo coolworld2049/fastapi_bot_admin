@@ -5,10 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 from starlette.exceptions import HTTPException
 
-from bot_admin_service import crud, schemas
-from bot_admin_service.db.dependency import get_session
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.api.exceptions import DuplicateUserException
 from bot_admin_service.core.config import get_app_settings
+from bot_admin_service.db.dependency import get_session
 from bot_admin_service.services.email import Email
 
 router = APIRouter()

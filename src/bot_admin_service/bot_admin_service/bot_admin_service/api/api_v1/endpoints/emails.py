@@ -7,8 +7,8 @@ from pydantic import EmailStr
 from starlette import status
 from starlette.responses import Response
 
-from bot_admin_service.db import models
 from bot_admin_service.api.deps import auth
+from bot_admin_service.db import models
 from bot_admin_service.services.email import Email
 
 router = APIRouter()

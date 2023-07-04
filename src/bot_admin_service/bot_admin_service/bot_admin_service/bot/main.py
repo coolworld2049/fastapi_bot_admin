@@ -3,7 +3,6 @@ import asyncio
 from aiogram import Dispatcher
 from loguru import logger
 
-from bot_admin_service.bot.dispatcher import dp
 from bot_admin_service.bot.handlers import menu
 from bot_admin_service.bot.loader import main_bot
 from bot_admin_service.core.config import get_app_settings
@@ -28,11 +27,3 @@ async def startup_bot(dp: Dispatcher) -> None:
 async def shutdown_bot(dp: Dispatcher) -> None:
     await dp.storage.close()
     await main_bot.session.close()
-
-
-async def start_polling_bot():
-    try:
-        await startup_bot(dp)
-        await dp.start_polling(main_bot, polling_timeout=5)
-    finally:
-        await shutdown_bot(dp)

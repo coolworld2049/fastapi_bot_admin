@@ -4,9 +4,8 @@ services:
 
   bot_admin_frontend:
     build: .
-    image: coolworldocker/bot_admin_frontend:latest
     environment:
-      - VITE_REST_URL=http://bot_admin_service:80
+      - ./.env
     ports:
       - "3030"
     restart: always

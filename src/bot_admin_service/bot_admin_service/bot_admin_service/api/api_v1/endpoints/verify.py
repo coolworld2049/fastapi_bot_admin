@@ -1,12 +1,12 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot_admin_service import crud
-from bot_admin_service.db import models
-from bot_admin_service.db.dependency import get_session
+import bot_admin_service.crud as crud
 from bot_admin_service.api.exceptions import (
     InvalidVerificationTokenException,
 )
+from bot_admin_service.db import models
+from bot_admin_service.db.dependency import get_session
 
 router = APIRouter()
 

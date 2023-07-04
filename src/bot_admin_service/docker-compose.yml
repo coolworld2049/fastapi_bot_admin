@@ -4,7 +4,6 @@ services:
 
   bot_admin_service:
     build: .
-    image: coolworldocker/bot_admin_service:latest
     env_file:
       - .env
     ports:

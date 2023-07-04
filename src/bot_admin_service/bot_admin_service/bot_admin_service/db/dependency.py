@@ -1,7 +1,8 @@
 from loguru import logger
-from sqlalchemy.ext.asyncio import AsyncSession
-from bot_admin_service.db.session import session
 from sqlalchemy import exc
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from bot_admin_service.db.session import session
 
 
 async def get_session() -> AsyncSession:
