@@ -10,12 +10,17 @@ services:
       - STAGE=prod
       - MAX_WORKERS=1
 
-  bot_admin_frontend:
+  ngrok:
     extends:
-      file: ../src/bot_admin_frontend/docker-compose.yml
-      service: bot_admin_frontend
-    environment:
-      - VITE_REST_URL=http://bot_admin_service:80
+      file: ../src/bot_admin_service/docker-compose.yml
+      service: ngrok
+
+#  bot_admin_frontend:
+#    extends:
+#      file: ../src/bot_admin_frontend/docker-compose.yml
+#      service: bot_admin_frontend
+#    environment:
+#      - VITE_REST_URL=http://bot_admin_service:80
 
   postgresql:
     image: bitnami/postgresql:latest
@@ -30,11 +35,6 @@ services:
     restart: always
     depends_on:
       - pgbouncer
-    healthcheck:
-      test: pg_isready -U admin
-      interval: 2s
-      timeout: 3s
-      retries: 40
 
   pgbouncer:
     image: bitnami/pgbouncer:latest

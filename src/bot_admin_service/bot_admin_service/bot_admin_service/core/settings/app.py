@@ -13,11 +13,11 @@ from bot_admin_service.core.settings.base import BaseAppSettings, StageType
 class BotSettings(BaseAppSettings):
     BOT_OWNER_ID: int
     BOT_TOKEN: str
-    WEBHOOK_DOMAIN: Optional[str]
+    WEBHOOK_ENDPOINT: Optional[str]
 
     @property
     def webhook_url(self):
-        return f"https://{self.WEBHOOK_DOMAIN}{self.api_prefix}/bot{self.BOT_TOKEN}"
+        return f"{self.WEBHOOK_ENDPOINT}{self.api_prefix}/bot{self.BOT_TOKEN}"
 
 
 class RedisSettings(BaseAppSettings):

@@ -4,6 +4,7 @@ services:
 
   bot_admin_frontend:
     build: .
+    hostname: bot_admin_frontend
     environment:
       - ./.env
     ports:
