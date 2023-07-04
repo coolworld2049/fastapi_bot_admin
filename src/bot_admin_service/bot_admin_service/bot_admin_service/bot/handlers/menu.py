@@ -8,7 +8,8 @@ from aiogram.types import User, Message, CallbackQuery
 from loguru import logger
 from sqlalchemy.exc import IntegrityError
 
-from bot_admin_service import crud, schemas
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.bot.callbacks import MenuCallback
 from bot_admin_service.db.session import get_db
 

@@ -6,7 +6,8 @@ from starlette import status
 from starlette.exceptions import HTTPException
 from starlette.responses import Response
 
-from bot_admin_service import schemas, crud
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.api.deps import auth, params
 from bot_admin_service.db import models, BotUser
 from bot_admin_service.db.dependency import get_session

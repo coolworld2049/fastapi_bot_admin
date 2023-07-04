@@ -18,7 +18,8 @@ from starlette.exceptions import HTTPException
 from starlette.requests import Request
 from starlette.responses import Response
 
-from bot_admin_service import schemas, crud
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.api.deps import auth, params
 from bot_admin_service.api.deps.bot import get_main_bot
 from bot_admin_service.db import models
@@ -186,6 +187,10 @@ async def publish_post(
             raise HTTPException(
                 detail=str(e.args), status_code=status.HTTP_400_BAD_REQUEST
             )
+    if not send_messages_count > 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Can't send messages"
+        )
     post = await crud.post.update(db, db_obj=post, obj_in=PostUpdate(is_published=True))
     post_resp = schemas.PostDetails(
         **post.__dict__,

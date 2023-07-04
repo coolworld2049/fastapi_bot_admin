@@ -11,6 +11,5 @@ COPY . .
 RUN yarn run build
 
 EXPOSE 3030
-EXPOSE 3000
 
-CMD ["yarn", "run", "dev"]
+CMD ["yarn", "run", "dev", "--mode", "production"]

@@ -4,9 +4,25 @@ services:
 
   bot_admin_service:
     build: .
-    image: coolworldocker/bot_admin_service:latest
+    hostname: bot_admin_service
     env_file:
       - .env
+    environment:
+      - WEBHOOK_ENDPOINT
     ports:
-      - "80"
+      - "80:80"
     restart: always
+    depends_on:
+      - ngrok
+
+  ngrok:
+    image: shkoliar/ngrok:latest
+    hostname: ngrok
+    ports:
+      - "4040:4040"
+    environment:
+      - REGION=eu
+      - DOMAIN=bot_admin_service
+      - PORT=80
+    env_file:
+      - .env

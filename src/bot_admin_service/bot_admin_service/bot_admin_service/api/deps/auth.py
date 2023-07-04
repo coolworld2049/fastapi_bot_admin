@@ -2,7 +2,7 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot_admin_service import crud
+import bot_admin_service.crud as crud
 from bot_admin_service.api.exceptions import (
     CouldNotValidateCredentialsException,
     AccountNotVerifiedException,

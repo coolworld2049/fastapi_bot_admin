@@ -8,8 +8,8 @@ from fastapi import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from bot_admin_service import crud
-from bot_admin_service import schemas
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.api.deps import auth
 from bot_admin_service.api.deps import params
 from bot_admin_service.api.exceptions import DuplicateUserException

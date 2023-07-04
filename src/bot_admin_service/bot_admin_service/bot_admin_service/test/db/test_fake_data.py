@@ -10,7 +10,8 @@ from loguru import logger
 from pydantic import EmailStr
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from bot_admin_service import crud, schemas
+import bot_admin_service.crud as crud
+import bot_admin_service.schemas as schemas
 from bot_admin_service.core.config import get_app_settings
 from bot_admin_service.core.settings.base import StageType
 from bot_admin_service.db.utils import create_database
