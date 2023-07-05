@@ -3,21 +3,18 @@
 ENV_FILE_PATH=../src/bot_admin_service/.env
 source ${ENV_FILE_PATH}
 
-project_name=${PROJECT_NAME?env PROJECT_NAME required}
-compose_file=docker-compose.yml
-
 install() {
-  docker-compose -p "$project_name" -f "$compose_file" up -d ngrok
+  docker-compose  up -d ngrok
   echo "Please enter ngrok https endpoint url (https://dashboard.ngrok.com/cloud-edge/endpoints):"
   read webhook_endpoint
-  docker-compose -p "$project_name" -f "$compose_file" up -d postgresql
-  WEBHOOK_ENDPOINT=${webhook_endpoint} docker-compose -p "$project_name" -f "$compose_file" up -d bot_admin_service
-  docker-compose -p "$project_name" -f "$compose_file" up -d bot_admin_frontend
+  docker-compose  up -d postgresql
+  WEBHOOK_ENDPOINT=${webhook_endpoint} docker-compose  up -d bot_admin_service
+  docker-compose  up -d bot_admin_frontend
 
 }
 
 delete() {
-  docker-compose -p "$project_name" -f "$compose_file" down --rmi local --remove-orphans
+  docker-compose down --rmi local --remove-orphans
 }
 
 print_usage() {
