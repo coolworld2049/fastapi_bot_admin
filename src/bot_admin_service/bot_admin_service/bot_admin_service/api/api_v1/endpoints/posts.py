@@ -11,7 +11,6 @@ from aiogram.types import (
 )
 from fastapi import Depends, APIRouter
 from fastapi.params import Param
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 from starlette.exceptions import HTTPException
@@ -127,10 +126,12 @@ async def publish_post(
     bot: Bot = Depends(get_main_bot),
 ):
     post = await crud.post.get(db, id=id)
-    text = post.text.replace("<p>", "").replace("</p>", "")
+    text = post.text
+    text = text.replace("</p><p>", "\n")
+    text = text.replace("<p>", "").replace("</p>", "\n\n")
     input_media: list[
         InputMediaPhoto | InputMediaVideo | InputMediaDocument | InputMediaAudio
-    ] = []
+        ] = []
     if post.files:
         if len(post.files) > 0:
             files = [schemas.ReactFile(**x) for x in post.files]
@@ -166,27 +167,25 @@ async def publish_post(
         db,
         RequestParams(limit=None),
     )
+    if not len(users) > 0:
+        raise HTTPException(
+            detail="users empty", status_code=status.HTTP_404_NOT_FOUND
+        )
     send_messages_count = 0
     for u in users:
         await asyncio.sleep(delay)
-        try:
-            if len(input_media) > 0:
-                message = await bot.send_media_group(
-                    chat_id=u.id,
-                    media=input_media,
-                )
-            else:
-                message = await bot.send_message(
-                    chat_id=u.id,
-                    text=text,
-                    parse_mode=post.parse_mode,
-                )
-            send_messages_count += 1
-        except Exception as e:
-            logger.error(e)
-            raise HTTPException(
-                detail=str(e.args), status_code=status.HTTP_400_BAD_REQUEST
+        if len(input_media) > 0:
+            message = await bot.send_media_group(
+                chat_id=u.id,
+                media=input_media,
             )
+        else:
+            message = await bot.send_message(
+                chat_id=u.id,
+                text=text,
+                parse_mode=post.parse_mode,
+            )
+        send_messages_count += 1
     if not send_messages_count > 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Can't send messages"

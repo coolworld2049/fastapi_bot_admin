@@ -40,7 +40,7 @@ export const PostList = (props: any) => {
   return (
     <List sort={{field: 'updated_at', order: 'DESC'}}
           debounce={1000}
-          perPage={5}
+          perPage={3}
     >
       <Datagrid
         rowClick="edit"
@@ -61,7 +61,6 @@ export const PostList = (props: any) => {
 };
 
 const PostPublishButton = (props: any) => {
-  const refresh = useRefresh();
   const notify = useNotify();
   const record = useRecordContext(props);
   const handleSuccess = () => {
@@ -72,12 +71,10 @@ const PostPublishButton = (props: any) => {
     ).then(r => {
       notify(`Post ${r.data.id} published! Bot users count: ${r.data.users_count}, Sent count ${r.data.sent_count}`,
         {type: 'success'})
-      refresh()
     })
   };
   const handleError = (error: any) => {
     notify(`Post ${record.id} is not published!${error}`, {type: 'error'})
-    refresh()
   };
   return (<SaveButton
     {...props}
@@ -92,8 +89,7 @@ const PostPublishButton = (props: any) => {
 const PostPublishToolbar = (props: any) => {
   return (
     <Toolbar {...props}>
-      <SaveButton {...props}
-      />
+      <SaveButton {...props}/>
       <PostPublishButton {...props} variant="outlined" sx={{marginLeft: "10px"}}/>
       <DeleteButton variant={"text"} sx={{marginLeft: "10px"}}/>
     </Toolbar>
@@ -120,7 +116,7 @@ export const PostEdit = (props: any) => {
           fullWidth
         />
         <FileInput source="files" multiple>
-          <FileField source="src" title="title" download target={"_blank"}/>
+          <FileField source="src" title="title" download/>
         </FileInput>
       </SimpleForm>
     </Edit>
@@ -139,7 +135,7 @@ export const PostCreate = () => {
           fullWidth
         />
         <FileInput source="files" multiple>
-          <FileField source="src" title="title" download target={"_blank"}/>
+          <FileField source="src" title="title" download/>
         </FileInput>
       </SimpleForm>
     </Create>

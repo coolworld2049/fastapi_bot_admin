@@ -57,7 +57,7 @@ async def create_users(db: AsyncSession, count=100, out_user_creds=None):
 @pytest.mark.asyncio
 async def test_fake_data(db: AsyncSession):
     await create_database(db)
-    if get_app_settings().STAGE != StageType.prod:
+    if get_app_settings().STAGE.name != StageType.prod.name:
         count = 20
         out_user_creds = "test_users_creds.json"
         users = await create_users(db=db, count=count, out_user_creds=out_user_creds)
