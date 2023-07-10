@@ -8,6 +8,7 @@
 
 ---
 
+## frontend 
 ![img.png](assets/ngrok-dash.png)
 
 ![cli-run.png](assets/cli-run.png)
@@ -25,6 +26,11 @@
 ![react-posts-create-4.png](assets/react-posts-create-4.png)
 
 ![react-dash.png](assets/react-dash.png)
+
+## backend
+
+![api-1.png](assets/api-1.png)
+![api-2.png](assets/api-2.png)
 
 ---
 
