@@ -131,7 +131,7 @@ async def publish_post(
     text = text.replace("<p>", "").replace("</p>", "\n\n")
     input_media: list[
         InputMediaPhoto | InputMediaVideo | InputMediaDocument | InputMediaAudio
-        ] = []
+    ] = []
     if post.files:
         if len(post.files) > 0:
             files = [schemas.ReactFile(**x) for x in post.files]
@@ -168,9 +168,7 @@ async def publish_post(
         RequestParams(limit=None),
     )
     if not len(users) > 0:
-        raise HTTPException(
-            detail="users empty", status_code=status.HTTP_404_NOT_FOUND
-        )
+        raise HTTPException(detail="users empty", status_code=status.HTTP_404_NOT_FOUND)
     send_messages_count = 0
     for u in users:
         await asyncio.sleep(delay)
